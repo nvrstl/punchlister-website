@@ -40,3 +40,4 @@ LEAD_NOTIFY_EMAIL=co-founder1@punchlister.com,co-founder2@punchlister.com
 ## Domain verification (Resend)
 
 For production, [verify your sending domain](https://resend.com/domains) in Resend and use a `LEAD_FROM_EMAIL` on that domain. Without verification, Resend only allows `onboarding@resend.dev`, which lands in spam more often.
+# getpunchlisted
