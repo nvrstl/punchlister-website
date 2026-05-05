@@ -1744,8 +1744,8 @@
       indicatorEl.appendChild(b);
     });
 
-    activate(0);
-    start();
+    // Render the first tab statically so the canvas isn't empty before animation triggers
+    render(0);
 
     var stage = document.querySelector('.tablet-stage');
     if (stage) {
@@ -1753,15 +1753,34 @@
       stage.addEventListener('mouseleave', function () { paused = false; });
     }
 
+    var hasStarted = false;
+    function kickoff() {
+      if (hasStarted) return;
+      hasStarted = true;
+      activate(0);
+      start();
+    }
+
     if ('IntersectionObserver' in window && stage) {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
-          if (e.isIntersecting) start();
-          else { stop(); clearPending(); }
+          if (e.isIntersecting) {
+            kickoff();
+            start();
+          } else {
+            // Stop the auto-advance timer but DO NOT clear pending animation timeouts —
+            // let any in-flight stream-in finish gracefully.
+            stop();
+          }
         });
       }, { threshold: 0.1 });
       io.observe(stage);
+    } else {
+      kickoff();
     }
+
+    // Safety net: if the observer never fires (rare), kick off after a short delay
+    setTimeout(kickoff, 800);
   })();
 
   /* ============ SCROLL REVEAL ============ */
