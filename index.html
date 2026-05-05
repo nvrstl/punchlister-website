@@ -865,20 +865,168 @@
     align-items: center;
   }
 
-  .built-image {
+  /* ============ BUILT-BY ANIMATED STACK ============ */
+  .built-visual {
     width: 100%;
     aspect-ratio: 1 / 1;
-    background: #d4d2cf;
-    border-radius: 12px;
     position: relative;
+    border-radius: 16px;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(124, 109, 240, 0.12), transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(255, 171, 255, 0.10), transparent 60%),
+      var(--paper-warm);
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .built-image::after {
-    content: '';
+  .stack {
+    position: relative;
+    width: 70%;
+    aspect-ratio: 3 / 4;
+    animation: stackFloat 6s ease-in-out infinite;
+  }
+
+  @keyframes stackFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+
+  .paper {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(124, 109, 240, 0.10), transparent 60%);
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow:
+      0 1px 2px rgba(26, 18, 64, 0.06),
+      0 8px 22px rgba(26, 18, 64, 0.10);
+    border: 1px solid rgba(26, 18, 64, 0.04);
+  }
+
+  .paper.back-2 {
+    transform: translate(14px, 18px) rotate(4deg);
+    background: #faf8f3;
+    z-index: 1;
+  }
+  .paper.back-1 {
+    transform: translate(7px, 9px) rotate(-2deg);
+    background: #fdfcf8;
+    z-index: 2;
+  }
+
+  .paper.front {
+    z-index: 3;
+    padding: 22px 22px 18px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .paper-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule-soft);
+    margin-bottom: 14px;
+  }
+
+  .paper-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+  }
+
+  .paper-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: opacity 0.3s ease;
+  }
+
+  .paper-time::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: timePulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes timePulse {
+    0%, 100% { opacity: 0.4; transform: scale(0.85); }
+    50%      { opacity: 1;   transform: scale(1.15); }
+  }
+
+  .paper-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .paper-line {
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, rgba(26, 18, 64, 0.10), rgba(26, 18, 64, 0.04));
+  }
+
+  .paper-line.short  { width: 60%; }
+  .paper-line.medium { width: 82%; }
+  .paper-line.full   { width: 100%; }
+
+  .paper-stamp {
+    margin-top: auto;
+    align-self: flex-end;
+    padding: 6px 12px;
+    border: 1.5px solid var(--accent);
+    border-radius: 6px;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    transform: rotate(-6deg);
+    opacity: 0;
+  }
+
+  .paper-stamp.in {
+    opacity: 0.85;
+    animation: stampIn 0.5s cubic-bezier(.34, 1.56, .64, 1);
+  }
+
+  @keyframes stampIn {
+    0%   { opacity: 0; transform: rotate(-6deg) scale(2.2); }
+    60%  { opacity: 1; transform: rotate(-6deg) scale(0.92); }
+    100% { opacity: 0.85; transform: rotate(-6deg) scale(1); }
+  }
+
+  .paper-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+
+  .paper-content.swapping .paper-type,
+  .paper-content.swapping .paper-time,
+  .paper-content.swapping .paper-lines,
+  .paper-content.swapping .paper-stamp {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stack, .paper-time::before { animation: none !important; }
   }
 
   .built-content h2 {
@@ -1190,7 +1338,7 @@
       grid-template-columns: 1fr;
       gap: 40px;
     }
-    .built-image { max-width: 420px; }
+    .built-visual { max-width: 420px; }
     .horizon-row {
       grid-template-columns: 1fr;
       gap: 8px;
@@ -1386,7 +1534,28 @@
 <section class="built">
   <div class="container">
     <div class="built-grid">
-      <div class="built-image reveal" aria-hidden="true"></div>
+      <div class="built-visual reveal" aria-hidden="true">
+        <div class="stack">
+          <div class="paper back-2"></div>
+          <div class="paper back-1"></div>
+          <div class="paper front">
+            <div class="paper-content" id="builtPaper">
+              <div class="paper-header">
+                <span class="paper-type">PROCES-VERBAAL</span>
+                <span class="paper-time">22:47</span>
+              </div>
+              <div class="paper-lines">
+                <div class="paper-line full"></div>
+                <div class="paper-line medium"></div>
+                <div class="paper-line full"></div>
+                <div class="paper-line short"></div>
+                <div class="paper-line medium"></div>
+              </div>
+              <div class="paper-stamp">Punchlister ✓</div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="built-content reveal">
         <h2>We runden een Belgisch bouwbedrijf voor we software bouwden voor de sector.</h2>
         <p>We weten hoe een proces-verbaal eruitziet, wat de <em>Wet Breyne</em> vraagt, en hoeveel avonden een projectleider verliest aan administratie die overdag niet lukt.</p>
@@ -1464,7 +1633,7 @@
   <div class="container footer-inner">
     <div>© 2026 Punchlister · Gent, België</div>
     <div class="footer-links">
-      <a href="#">Privacy</a>
+      <a href="privacy.html">Privacy</a>
       <a href="mailto:hello@punchlister.ai">Contact</a>
     </div>
   </div>
@@ -1799,6 +1968,82 @@
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
     els.forEach(function (el) { io.observe(el); });
+  })();
+
+  /* ============ BUILT-BY DOCUMENT STACK ============ */
+  (function () {
+    var content = document.getElementById('builtPaper');
+    if (!content) return;
+
+    var docs = [
+      { type: 'PROCES-VERBAAL',     time: '22:47', stamp: 'Punchlister ✓' },
+      { type: 'WET BREYNE — ART. 7', time: '23:14', stamp: 'Verstuurd' },
+      { type: 'BETWISTING FACTUUR', time: '23:42', stamp: 'Geseponeerd' },
+      { type: 'WERFVERSLAG 14/05',  time: '00:08', stamp: 'Klaar' },
+      { type: 'SCHADECLAIM',        time: '00:31', stamp: 'Behandeld' }
+    ];
+
+    var typeEl  = content.querySelector('.paper-type');
+    var timeEl  = content.querySelector('.paper-time');
+    var stampEl = content.querySelector('.paper-stamp');
+    var idx = 0;
+    var timer = null;
+    var visible = false;
+
+    function paint(d, withStamp) {
+      typeEl.textContent  = d.type;
+      timeEl.textContent  = d.time;
+      stampEl.textContent = d.stamp;
+      stampEl.classList.remove('in');
+      if (withStamp) {
+        // re-trigger stamp animation
+        void stampEl.offsetWidth;
+        stampEl.classList.add('in');
+      }
+    }
+
+    function next() {
+      if (!visible) return;
+      idx = (idx + 1) % docs.length;
+      content.classList.add('swapping');
+      setTimeout(function () {
+        paint(docs[idx], false);
+        content.classList.remove('swapping');
+        // stamp comes down a moment after the new doc appears
+        setTimeout(function () {
+          stampEl.textContent = docs[idx].stamp;
+          void stampEl.offsetWidth;
+          stampEl.classList.add('in');
+        }, 380);
+      }, 320);
+    }
+
+    function start() {
+      stop();
+      timer = setInterval(next, 2800);
+    }
+    function stop() {
+      if (timer) clearInterval(timer);
+      timer = null;
+    }
+
+    // initial stamp drop
+    paint(docs[0], true);
+
+    var stage = document.querySelector('.built-visual');
+    if ('IntersectionObserver' in window && stage) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          visible = e.isIntersecting;
+          if (visible) start();
+          else stop();
+        });
+      }, { threshold: 0.15 });
+      io.observe(stage);
+    } else {
+      visible = true;
+      start();
+    }
   })();
 
   /* ============ PILOT FORM TOGGLE ============ */
