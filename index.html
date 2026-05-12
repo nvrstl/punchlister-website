@@ -300,10 +300,18 @@
   .tablet-screen {
     background: #ffffff;
     border-radius: 18px;
-    padding: 44px 56px 56px;
-    height: 600px;
+    padding: 0;
+    aspect-ratio: 1684 / 1080;
     position: relative;
     overflow: hidden;
+  }
+
+  .tablet-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
   }
 
   .tablet-dots {
@@ -1346,7 +1354,7 @@
     .container { padding: 0 20px; }
     .header-inner { max-width: 100%; }
     .hero { padding: 130px 0 70px; }
-    .tablet-screen { padding: 36px 24px 36px; height: 640px; }
+    .tablet-screen { padding: 0; }
     .artifact-header {
       grid-template-columns: 1fr;
       gap: 4px 0;
@@ -1437,22 +1445,17 @@
 
     <div class="tablet">
       <div class="tablet-screen">
-        <div class="tablet-dots" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </div>
-        <div class="memo-bar" id="memoBar" aria-hidden="true">
-          <span class="memo-wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
-          <span class="memo-check">✓</span>
-          <span class="memo-label">Spraakmemo</span>
-        </div>
-        <div class="tablet-content" id="tabletContent">
-          <!-- content injected by JS -->
-        </div>
+        <video
+          class="tablet-video"
+          src="video/Recording_PML.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          aria-label="Demo van Punchlister"
+        ></video>
       </div>
-    </div>
-
-    <div class="tablet-indicator" id="tabletIndicator" role="tablist" aria-label="Voorbeelden van werfbezoeken">
-      <!-- buttons injected by JS -->
     </div>
   </div>
 </section>
@@ -1637,328 +1640,6 @@
 </footer>
 
 <script>
-  /* ============ DYNAMIC TABLET CONTENT ============ */
-  (function () {
-    var examples = [
-      {
-        kind: 'estimate',
-        to: 'Bouwheer — Familie Janssens',
-        from: 'Project Manager — Wijngaardstraat 12',
-        date: '14 mei 2026',
-        subject: 'Plaatsbezoek 14/05 — bevestiging meerwerken keuken',
-        opening: 'Geachte heer Janssens,',
-        intro: 'Ter bevestiging van ons gesprek op de werf van vanochtend.',
-        sectionTitle: 'Besproken',
-        items: [
-          'Verplaatsing keukenstopcontact van noord- naar oostwand',
-          'Bijkomende verlichting boven kookeiland (3 spots)',
-          'Tegelkeuze badkamer — definitieve beslissing tegen 21/05'
-        ],
-        calc: {
-          rows: [
-            { label: 'Werkuren — 4u × €85', value: 340 },
-            { label: 'Materiaal — 3 spots + bekabeling', value: 185 }
-          ],
-          total: 525
-        }
-      },
-      {
-        kind: 'schedule',
-        to: 'Onderaannemer Elektriciteit — Smets BV',
-        from: 'Project Manager — Wijngaardstraat 12',
-        date: '14 mei 2026',
-        subject: 'Werfopdracht keuken — uitvoering week 22',
-        opening: 'Beste Tom,',
-        intro: 'Naar aanleiding van het werfbezoek van vanochtend, hierbij de bevestiging van de uit te voeren werken.',
-        sectionTitle: 'Uit te voeren',
-        items: [
-          'Verplaatsen keukenstopcontact noord → oost',
-          'Bijkomende verlichting kookeiland (3 spots, dimbaar)',
-          'Bekabeling te voorzien voor 14u start uitvoering'
-        ],
-        schedule: {
-          label: 'Week 22 — uitvoering',
-          days: ['M', 'D', 'W', 'D', 'V', 'Z', 'Z'],
-          active: [1, 2, 3]
-        }
-      },
-      {
-        kind: 'evidence',
-        to: 'Bouwheer — Familie De Smet',
-        from: 'Project Manager — Lindelaan 8',
-        date: '06 mei 2026',
-        subject: 'Schademelding 06/05 — bevestiging vaststelling badkamer',
-        opening: 'Geachte mevrouw De Smet,',
-        intro: 'Ter bevestiging van onze vaststelling vanmorgen omtrent de gemelde lekkage in de badkamer.',
-        sectionTitle: 'Vaststelling',
-        items: [
-          'Vochtplek vastgesteld onder lavabo, oppervlakte ca. 40 × 25 cm',
-          'Foto\'s genomen ter dossiervorming',
-          'Oorzaak vermoedelijk losgekomen sifon — verder onderzoek vereist'
-        ],
-        followup: {
-          title: 'Vervolgstappen — automatisch ingepland',
-          steps: [
-            { label: "Foto's bijgevoegd aan dossier", date: 'vandaag', done: true },
-            { label: 'Sifon nazicht door loodgieter', date: '08/05', done: false },
-            { label: 'Verzekeraar verwittigen',       date: '09/05', done: false },
-            { label: 'Definitief herstel inplannen',  date: 'wk. 21', done: false }
-          ]
-        }
-      }
-    ];
-
-    var contentEl = document.getElementById('tabletContent');
-    var indicatorEl = document.getElementById('tabletIndicator');
-    var memoBar = document.getElementById('memoBar');
-    var memoLabel = memoBar.querySelector('.memo-label');
-    var current = 0;
-    var timer = null;
-    var paused = false;
-    var pendingTimeouts = [];
-
-    function clearPending() {
-      pendingTimeouts.forEach(function (t) { clearTimeout(t); });
-      pendingTimeouts = [];
-    }
-    function later(fn, ms) {
-      var t = setTimeout(fn, ms);
-      pendingTimeouts.push(t);
-      return t;
-    }
-
-    function escape(s) {
-      return String(s).replace(/[&<>"']/g, function (c) {
-        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
-      });
-    }
-
-    function buildHTML(ex) {
-      var s = '';
-      s += '<dl class="artifact-header">';
-      s += '<dt class="stream" data-step="0">Aan</dt><dd class="stream" data-step="0">' + escape(ex.to) + '</dd>';
-      s += '<dt class="stream" data-step="1">Van</dt><dd class="stream" data-step="1">' + escape(ex.from) + '</dd>';
-      s += '<dt class="stream" data-step="2">Datum</dt><dd class="stream" data-step="2">' + escape(ex.date) + '</dd>';
-      s += '<dt class="stream" data-step="3">Betreft</dt><dd class="stream subject" data-step="3">' + escape(ex.subject) + '</dd>';
-      s += '</dl>';
-      s += '<div class="artifact-body">';
-      s += '<p class="stream" data-step="4">' + escape(ex.opening) + '</p>';
-      s += '<p class="stream" data-step="5">' + escape(ex.intro) + '</p>';
-      s += '<h4 class="stream" data-step="6">' + escape(ex.sectionTitle) + '</h4>';
-      s += '<ul>';
-      ex.items.forEach(function (item, i) {
-        s += '<li class="stream" data-step="' + (7 + i) + '">' + escape(item) + '</li>';
-      });
-      s += '</ul>';
-
-      // tab-specific extras (placeholder, animated by activate)
-      if (ex.kind === 'estimate') {
-        var lastStep = 7 + ex.items.length;
-        s += '<div class="calc stream" data-step="' + lastStep + '" data-extra="calc">';
-        s += '<div class="calc-title">Indicatieve raming meerwerken</div>';
-        ex.calc.rows.forEach(function (r) {
-          s += '<div class="calc-row"><span>' + escape(r.label) + '</span>';
-          s += '<span class="calc-num" data-target="' + r.value + '">€0</span></div>';
-        });
-        s += '<div class="calc-row total"><span>Geschatte totaalprijs</span>';
-        s += '<span class="calc-num" data-target="' + ex.calc.total + '">€0</span></div>';
-        s += '</div>';
-      } else if (ex.kind === 'schedule') {
-        var lastStep2 = 7 + ex.items.length;
-        s += '<div class="schedule stream" data-step="' + lastStep2 + '" data-extra="schedule">';
-        s += '<div class="schedule-title">' + escape(ex.schedule.label) + '</div>';
-        s += '<div class="schedule-grid">';
-        ex.schedule.days.forEach(function (d, i) {
-          s += '<div class="schedule-day" data-idx="' + i + '">' + escape(d) + '</div>';
-        });
-        s += '</div></div>';
-      } else if (ex.kind === 'evidence') {
-        var lastStep3 = 7 + ex.items.length;
-        s += '<div class="followup stream" data-step="' + lastStep3 + '" data-extra="followup">';
-        s += '<div class="followup-title">' + escape(ex.followup.title) + '</div>';
-        ex.followup.steps.forEach(function (step, i) {
-          s += '<div class="followup-row" data-i="' + i + '"' + (step.done ? ' data-done="1"' : '') + '>';
-          s += '<span class="followup-check">✓</span>';
-          s += '<span class="followup-label">' + escape(step.label) + '</span>';
-          s += '<span class="followup-date">' + escape(step.date) + '</span>';
-          s += '</div>';
-        });
-        s += '</div>';
-      }
-
-      s += '</div>';
-      return s;
-    }
-
-    function streamIn(root) {
-      var lines = root.querySelectorAll('.stream');
-      var stepDelay = 40;
-      lines.forEach(function (el, i) {
-        var step = parseInt(el.getAttribute('data-step'), 10) || i;
-        later(function () {
-          el.classList.add('streaming');
-          el.classList.add('in');
-          // remove caret shortly after
-          later(function () { el.classList.remove('streaming'); }, 160);
-        }, 120 + step * stepDelay);
-      });
-
-      // Activate any tab-specific extra after its line is in
-      var extra = root.querySelector('[data-extra]');
-      if (extra) {
-        var step = parseInt(extra.getAttribute('data-step'), 10) || 0;
-        var startAt = 120 + step * stepDelay + 160;
-        var kind = extra.getAttribute('data-extra');
-        if (kind === 'calc') later(function () { animateCalc(extra); }, startAt);
-        if (kind === 'schedule') later(function () { animateSchedule(extra); }, startAt);
-        if (kind === 'followup') later(function () { animateFollowup(extra); }, startAt);
-      }
-    }
-
-    function animateCalc(root) {
-      var nums = root.querySelectorAll('.calc-num');
-      nums.forEach(function (el, i) {
-        var target = parseInt(el.getAttribute('data-target'), 10) || 0;
-        later(function () {
-          el.classList.add('ticking');
-          var duration = 700;
-          var startTs = null;
-          function step(ts) {
-            if (!startTs) startTs = ts;
-            var p = Math.min(1, (ts - startTs) / duration);
-            var eased = 1 - Math.pow(1 - p, 3);
-            var v = Math.round(target * eased);
-            el.textContent = '€' + v;
-            if (p < 1) requestAnimationFrame(step);
-            else later(function () { el.classList.remove('ticking'); }, 200);
-          }
-          requestAnimationFrame(step);
-        }, i * 180);
-      });
-    }
-
-    function animateSchedule(root) {
-      var days = root.querySelectorAll('.schedule-day');
-      // mark the current "today" first
-      if (days[0]) days[0].classList.add('today');
-      var actives = [1, 2, 3];
-      actives.forEach(function (idx, i) {
-        later(function () {
-          if (days[idx]) days[idx].classList.add('active');
-        }, 200 + i * 180);
-      });
-    }
-
-    function animateFollowup(root) {
-      var rows = root.querySelectorAll('.followup-row');
-      rows.forEach(function (row, i) {
-        later(function () {
-          row.classList.add('in');
-          if (row.getAttribute('data-done') === '1') {
-            later(function () { row.classList.add('done'); }, 220);
-          }
-        }, i * 130);
-      });
-    }
-
-    function setMemo(state) {
-      // 'recording' | 'done' | 'hidden'
-      memoBar.classList.remove('show', 'done');
-      if (state === 'recording') {
-        memoLabel.textContent = 'Spraakmemo • verwerken…';
-        memoBar.classList.add('show');
-      } else if (state === 'done') {
-        memoLabel.textContent = 'Klaar om te versturen';
-        memoBar.classList.add('show', 'done');
-      }
-    }
-
-    function render(idx) {
-      var ex = examples[idx];
-      contentEl.innerHTML = buildHTML(ex);
-      Array.prototype.forEach.call(indicatorEl.children, function (b, i) {
-        b.classList.toggle('active', i === idx);
-      });
-    }
-
-    function activate(idx) {
-      clearPending();
-      current = idx;
-      // 1. show recording bar briefly
-      setMemo('recording');
-      // 2. swap content (lines hidden via .stream)
-      render(idx);
-      // 3. begin stream-in
-      later(function () { streamIn(contentEl); }, 150);
-      // 4. mark memo "done" once content has finished
-      var ex = examples[idx];
-      var totalSteps = 7 + ex.items.length + 1;
-      later(function () { setMemo('done'); }, 150 + totalSteps * 40 + 500);
-    }
-
-    function next() {
-      if (paused) return;
-      var n = (current + 1) % examples.length;
-      activate(n);
-    }
-
-    function start() {
-      stop();
-      timer = setInterval(next, 4500);
-    }
-    function stop() {
-      if (timer) clearInterval(timer);
-      timer = null;
-    }
-
-    examples.forEach(function (_, i) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.setAttribute('role', 'tab');
-      b.setAttribute('aria-label', 'Voorbeeld ' + (i + 1));
-      b.addEventListener('click', function () { activate(i); start(); });
-      indicatorEl.appendChild(b);
-    });
-
-    // Render the first tab statically so the canvas isn't empty before animation triggers
-    render(0);
-
-    var stage = document.querySelector('.tablet-stage');
-    if (stage) {
-      stage.addEventListener('mouseenter', function () { paused = true; });
-      stage.addEventListener('mouseleave', function () { paused = false; });
-    }
-
-    var hasStarted = false;
-    function kickoff() {
-      if (hasStarted) return;
-      hasStarted = true;
-      activate(0);
-      start();
-    }
-
-    if ('IntersectionObserver' in window && stage) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) {
-            kickoff();
-            start();
-          } else {
-            // Stop the auto-advance timer but DO NOT clear pending animation timeouts —
-            // let any in-flight stream-in finish gracefully.
-            stop();
-          }
-        });
-      }, { threshold: 0.1 });
-      io.observe(stage);
-    } else {
-      kickoff();
-    }
-
-    // Safety net: if the observer never fires (rare), kick off after a short delay
-    setTimeout(kickoff, 800);
-  })();
-
   /* ============ SCROLL REVEAL ============ */
   (function () {
     var els = document.querySelectorAll('.reveal, .reveal-stagger');
