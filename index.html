@@ -60,7 +60,11 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+  }
 
   body {
     font-family: 'Google Sans', sans-serif;
@@ -71,6 +75,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    width: 100%;
+    position: relative;
   }
 
   .display {
@@ -215,6 +221,7 @@
     padding: 40px 0 120px;
     position: relative;
     background: linear-gradient(180deg, var(--paper) 0%, var(--paper) 100%);
+    overflow: hidden;
   }
 
   .artifact-intro {
@@ -1206,6 +1213,8 @@
   .apply-form input,
   .apply-form select,
   .apply-form textarea {
+    width: 100%;
+    max-width: 100%;
     font-family: 'Google Sans', sans-serif;
     font-size: 14px;
     color: var(--ink);
