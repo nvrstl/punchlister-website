@@ -1345,6 +1345,267 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* ============ FLOW / INTEGRATIES ============ */
+  .flow {
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 18% 40%, rgba(178, 249, 235, 0.30), transparent 55%),
+      radial-gradient(ellipse at 88% 60%, rgba(124, 109, 240, 0.10), transparent 55%),
+      var(--paper);
+  }
+
+  .flow-head {
+    max-width: 720px;
+    margin-bottom: 64px;
+  }
+
+  .flow-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 22px;
+    font-weight: 500;
+  }
+
+  .flow-head h2 {
+    font-size: clamp(32px, 4.2vw, 46px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+
+  .flow-head h2 em {
+    font-style: normal;
+    color: rgba(26, 18, 64, 0.40);
+  }
+
+  .flow-head p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 56ch;
+  }
+
+  /* ----- diagram grid ----- */
+  .flow-diagram {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    align-items: center;
+    gap: 0 28px;
+    min-height: 380px;
+  }
+
+  /* ----- engine ----- */
+  .flow-engine {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .engine-rings {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: grid;
+    place-items: center;
+  }
+
+  .engine-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(124, 109, 240, 0.22);
+  }
+  .engine-ring.r1 { inset: 0; animation: engineSpin 26s linear infinite; }
+  .engine-ring.r2 { inset: 26px; border-color: rgba(124, 109, 240, 0.30); border-style: dashed; animation: engineSpin 18s linear infinite reverse; }
+
+  .engine-glow {
+    position: absolute;
+    inset: 44px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(178, 249, 235, 0.55), rgba(255, 171, 255, 0.18) 60%, transparent 72%);
+    filter: blur(2px);
+    animation: enginePulse 4.5s ease-in-out infinite;
+  }
+
+  .engine-mark {
+    position: relative;
+    width: 92px;
+    height: 92px;
+    display: grid;
+    place-items: center;
+    filter: drop-shadow(0 8px 22px rgba(40, 0, 99, 0.18));
+  }
+  .engine-mark svg { width: 100%; height: 100%; }
+
+  .engine-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  /* ----- source pills ----- */
+  .flow-sources {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    padding: 0 8px;
+  }
+
+  .flow-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--rule-soft);
+    border-radius: 999px;
+    padding: 9px 18px;
+    white-space: nowrap;
+    align-self: flex-start;
+    transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+  }
+  /* gentle staircase, echoing the reference layout */
+  .flow-pill:nth-child(2) { margin-left: 26px; }
+  .flow-pill:nth-child(3) { margin-left: 14px; }
+  .flow-pill:nth-child(4) { margin-left: 34px; }
+  .flow-pill:nth-child(5) { margin-left: 10px; }
+
+  .flow-pill.active {
+    color: var(--accent);
+    border-color: var(--accent-soft);
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(124, 109, 240, 0.16);
+    transform: translateX(4px);
+  }
+
+  /* ----- connectors ----- */
+  .flow-bridge {
+    position: relative;
+    align-self: stretch;
+    min-height: 320px;
+  }
+
+  .flow-wires {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .flow-wires .wire {
+    stroke: rgba(124, 109, 240, 0.55);
+    stroke-width: 1.4;
+    stroke-dasharray: 3 7;
+    stroke-linecap: round;
+    animation: wireFlow 1.4s linear infinite;
+    opacity: 0.75;
+  }
+  .flow-wires .wire:nth-child(1) { animation-delay: 0s; }
+  .flow-wires .wire:nth-child(2) { animation-delay: 0.12s; }
+  .flow-wires .wire:nth-child(3) { animation-delay: 0.24s; }
+  .flow-wires .wire:nth-child(4) { animation-delay: 0.36s; }
+  .flow-wires .wire:nth-child(5) { animation-delay: 0.48s; }
+
+  .flow-node {
+    position: absolute;
+    left: 4%;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    margin: -6px 0 0 -6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(124, 109, 240, 0.45);
+    animation: nodePulse 2.4s ease-out infinite;
+  }
+
+  /* ----- destination apps ----- */
+  .flow-targets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+    height: 100%;
+    min-height: 320px;
+  }
+
+  .app-tile {
+    position: relative;
+    width: 58px;
+    height: 58px;
+    border-radius: 15px;
+    background: var(--tile);
+    display: grid;
+    place-items: center;
+    box-shadow: 0 6px 16px rgba(40, 0, 99, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .app-tile svg { width: 66%; height: 66%; }
+  .app-tile.tile-light { border: 1px solid var(--rule); box-shadow: 0 6px 16px rgba(40, 0, 99, 0.10); }
+
+  .app-tile::before {
+    content: attr(data-label);
+    position: absolute;
+    right: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .flow-more {
+    margin-top: 40px;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  @keyframes engineSpin {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes enginePulse {
+    0%, 100% { opacity: 0.7; transform: scale(0.96); }
+    50%      { opacity: 1;   transform: scale(1.04); }
+  }
+  @keyframes wireFlow {
+    to { stroke-dashoffset: -10; }
+  }
+  @keyframes nodePulse {
+    0%   { box-shadow: 0 0 0 0 rgba(124, 109, 240, 0.45); }
+    70%  { box-shadow: 0 0 0 14px rgba(124, 109, 240, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(124, 109, 240, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .engine-ring, .engine-glow, .flow-wires .wire, .flow-node { animation: none !important; }
+    .flow-wires .wire { opacity: 0.9; }
+  }
+
   /* ============ RESPONSIVE ============ */
   @media (max-width: 900px) {
     .pm-value-grid { grid-template-columns: 1fr; }
@@ -1357,9 +1618,45 @@
       grid-template-columns: 1fr;
       gap: 8px;
     }
+    /* diagram: collapse the bridge, keep engine -> sources -> apps readable */
+    .flow-diagram {
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        "engine engine"
+        "sources targets";
+      gap: 40px 24px;
+      min-height: 0;
+    }
+    .flow-engine { grid-area: engine; }
+    .flow-sources { grid-area: sources; padding: 0; }
+    .flow-targets {
+      grid-area: targets;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-content: flex-start;
+      min-height: 0;
+      height: auto;
+    }
+    .flow-bridge { display: none; }
+    .flow-pill { margin-left: 0 !important; }
+    .app-tile::before { display: none; }
+    .flow-more { text-align: center; }
   }
 
   @media (max-width: 768px) {
+    .flow { padding: 70px 0; }
+    .flow-diagram {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "engine"
+        "sources"
+        "targets";
+      gap: 32px;
+    }
+    .flow-sources { align-items: center; }
+    .flow-pill { align-self: center; }
+    .flow-targets { justify-content: center; gap: 12px; }
     .container { padding: 0 20px; }
     .header-inner { max-width: 100%; }
     .hero { padding: 130px 0 70px; }
@@ -1516,6 +1813,99 @@
   </div>
 </section>
 
+<section class="flow" id="integraties">
+  <div class="container">
+    <div class="flow-head reveal">
+      <div class="flow-eyebrow">Eén opname, overal verwerkt</div>
+      <h2>Wat je dicteert, komt terecht <em>waar het hoort.</em></h2>
+      <p>Punchlister zet je werfbezoek om in gestructureerde documenten en levert ze af in de tools die je team vandaag al gebruikt.</p>
+    </div>
+
+    <div class="flow-diagram reveal" aria-hidden="true">
+      <!-- ENGINE -->
+      <div class="flow-engine">
+        <div class="engine-rings">
+          <span class="engine-ring r1"></span>
+          <span class="engine-ring r2"></span>
+          <span class="engine-glow"></span>
+          <div class="engine-mark">
+            <svg viewBox="0 0 280 280" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(0,38)">
+                <path fill="#ffabff" d="M271.5,56.6h0c-5.2,19.2-22.6,32.6-42.5,32.6h-27.8l9.2-34.1h-124.6L100.2,1.2h128.8c28.9,0,50,27.4,42.5,55.4Z"/>
+                <path fill="#b2f9eb" d="M185.1,149.1l-14.4,53.8H55.4c-35.7,0-61.7-33.9-52.5-68.4L24.2,55.1h61.5l-25.2,94h124.5Z"/>
+                <path fill="#8b88f1" d="M201.2,89.3l9.2-34.1h-124.6,0s0,0,0,0l-25.2,94h31.3c0,0,0,0,0,0h13.8c5.4-5.4,9.4-11,12.2-16.4l69.1-43.4h14.2Z"/>
+                <path fill="#280063" d="M105.7,149.1c28.4-28.4,16-59.9,16-59.9h79.5l-95.5,59.9Z"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="engine-label">Punchlister</div>
+      </div>
+
+      <!-- SOURCE ARTIFACTS -->
+      <ul class="flow-sources">
+        <li class="flow-pill" style="--i:0">Werfverslag</li>
+        <li class="flow-pill" style="--i:1">Proces-verbaal</li>
+        <li class="flow-pill" style="--i:2">Meerwerk-raming</li>
+        <li class="flow-pill" style="--i:3">Afspraak onderaannemer</li>
+        <li class="flow-pill" style="--i:4">Schademelding</li>
+      </ul>
+
+      <!-- CONNECTORS -->
+      <div class="flow-bridge">
+        <svg class="flow-wires" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke="var(--accent)" stroke-width="1" vector-effect="non-scaling-stroke">
+            <path class="wire" d="M4,50 C40,50 62,10 98,10"/>
+            <path class="wire" d="M4,50 C40,50 62,30 98,30"/>
+            <path class="wire" d="M4,50 C40,50 62,50 98,50"/>
+            <path class="wire" d="M4,50 C40,50 62,70 98,70"/>
+            <path class="wire" d="M4,50 C40,50 62,90 98,90"/>
+          </g>
+        </svg>
+        <span class="flow-node"></span>
+      </div>
+
+      <!-- DESTINATION APPS -->
+      <ul class="flow-targets">
+        <li class="app-tile tile-light" style="--i:0;--tile:#ffffff" data-label="Outlook">
+          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <rect x="14" y="9" width="14.5" height="14" rx="1.6" fill="#1a8fe3"/>
+            <path d="M14.4 9.6 21.3 15 28.1 9.6" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round" opacity=".95"/>
+            <rect x="3.2" y="6" width="13.6" height="20" rx="2.2" fill="#0a4ba0"/>
+            <ellipse cx="10" cy="16" rx="4.5" ry="5.4" fill="none" stroke="#fff" stroke-width="2.6"/>
+          </svg>
+        </li>
+        <li class="app-tile" style="--i:1;--tile:#4fc163" data-label="WhatsApp">
+          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 5.5A10.2 10.2 0 0 0 7.1 20.9L5.8 26.2l5.4-1.4A10.2 10.2 0 1 0 16 5.5Z" fill="#fff"/>
+            <path d="M12.4 11.1c.27-.6.55-.6.82-.6h.66c.27 0 .55 0 .82.66l.85 2.06c.13.32 0 .5-.13.66l-.55.66c-.13.13-.27.4-.13.66.27.53.95 1.5 1.78 2.2 1.1.85 1.78 1.1 2.2 1.24.27.06.4 0 .68-.27l.66-.79c.18-.27.4-.27.68-.13l1.9.95c.27.13.55.27.55.53 0 .66-.27 1.85-1.24 2.25-.82.4-1.9.53-4.5-.66-3.16-1.5-5.07-4.88-5.21-5.07-.13-.27-1.24-1.78-1.24-3.3 0-1.5.82-2.2 1.1-2.42Z" fill="#4fc163"/>
+          </svg>
+        </li>
+        <li class="app-tile" style="--i:2;--tile:#0e2233" data-label="Integratie">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.2 6.5 11.6 12 6.2 17.5" fill="none" stroke="#5fe3b0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12.4 6.5 17.8 12l-5.4 5.5" fill="none" stroke="#5fe3b0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </li>
+        <li class="app-tile" style="--i:3;--tile:#62bd47" data-label="Goedkeuring">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="7.1" fill="none" stroke="#fff" stroke-width="2.2"/>
+            <path d="M8.4 12.3 11 15 16 9.4" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </li>
+        <li class="app-tile" style="--i:4;--tile:#3d82f4" data-label="BricsCAD">
+          <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+            <path d="M150 76 L100 113 L100 220" fill="none" stroke="#fff" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M138 118 L210 168 L138 218" fill="none" stroke="#fff" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </li>
+      </ul>
+    </div>
+
+    <div class="flow-more reveal">+ binnenkort meer integraties</div>
+  </div>
+</section>
+
 <section class="horizon">
   <div class="container">
     <div class="horizon-eyebrow reveal">Waar we naartoe gaan</div>
@@ -1665,6 +2055,52 @@
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
     els.forEach(function (el) { io.observe(el); });
+  })();
+
+  /* ============ FLOW / INTEGRATIES SEQUENCE ============ */
+  (function () {
+    var diagram = document.querySelector('.flow-diagram');
+    if (!diagram) return;
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+
+    var pills = Array.prototype.slice.call(diagram.querySelectorAll('.flow-pill'));
+    if (!pills.length) return;
+
+    var step = 0;
+    var timer = null;
+    var running = false;
+
+    function tick() {
+      pills.forEach(function (p) { p.classList.remove('active'); });
+      pills[step % pills.length].classList.add('active');
+      step++;
+    }
+
+    function start() {
+      if (running) return;
+      running = true;
+      tick();
+      timer = setInterval(tick, 1900);
+    }
+    function stop() {
+      running = false;
+      if (timer) { clearInterval(timer); timer = null; }
+      pills.forEach(function (p) { p.classList.remove('active'); });
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) start();
+          else stop();
+        });
+      }, { threshold: 0.3 });
+      io.observe(diagram);
+    } else {
+      start();
+    }
   })();
 
   /* ============ BUILT-BY DOCUMENT STACK ============ */
