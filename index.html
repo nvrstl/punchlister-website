@@ -1675,6 +1675,491 @@
       text-align: center;
     }
   }
+
+  /* ============ CAPTURE / WHATSAPP FLOW ============ */
+  .capture {
+    padding: 110px 0;
+    background:
+      radial-gradient(1100px 520px at 50% -8%, rgba(124, 109, 240, 0.07), transparent 70%),
+      var(--paper);
+    overflow: hidden;
+  }
+
+  .capture-stage {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: start;
+    gap: 0 8px;
+  }
+
+  .capture-side {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+    padding: 28px 0 0;
+  }
+
+  /* ----- captions ----- */
+  .cap-caption { text-align: center; }
+  .cap-caption strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .cap-caption span {
+    display: block;
+    margin-top: 3px;
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+
+  /* ----- floating pills ----- */
+  .cap-pills {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+  }
+  .cap-pill {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.01em;
+    color: var(--ink-soft);
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid var(--rule-soft);
+    border-radius: 999px;
+    padding: 8px 13px;
+    white-space: nowrap;
+    box-shadow: 0 8px 22px rgba(40, 0, 99, 0.09);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.35s ease, border-color 0.35s ease, color 0.35s ease;
+  }
+  .reveal.in .cap-pill {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: calc(0.3s + var(--i) * 0.13s);
+  }
+  .cap-pill svg { width: 14px; height: 14px; flex: none; color: var(--accent); }
+  .cap-pill.active {
+    border-color: var(--accent-soft);
+    box-shadow: 0 12px 28px rgba(124, 109, 240, 0.24);
+    color: var(--accent);
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  /* left-side pill positions (echo the reference scatter) */
+  .cap-pills-left .cap-pill:nth-child(1) { top: 6%;  left: -4%; }
+  .cap-pills-left .cap-pill:nth-child(2) { top: 1%;  right: -2%; }
+  .cap-pills-left .cap-pill:nth-child(3) { top: 40%; left: -12%; }
+  .cap-pills-left .cap-pill:nth-child(4) { bottom: 26%; left: -8%; }
+  .cap-pills-left .cap-pill:nth-child(5) { bottom: 12%; left: 14%; }
+  /* right-side pill positions — kept in the vertical whitespace above/below the
+     dense panel, where the dashboard text never reaches */
+  .cap-pills-right .cap-pill:nth-child(1) { top: -8%; right: 5%; }
+  .cap-pills-right .cap-pill:nth-child(2) { top: -8%; left: 3%; }
+  .cap-pills-right .cap-pill:nth-child(3) { top: 70%; right: -7%; }
+
+  /* ----- phone mockup ----- */
+  .cap-phone {
+    position: relative;
+    z-index: 2;
+    width: 252px;
+    max-width: 80%;
+    background: #0f0a2e;
+    border-radius: 36px;
+    padding: 9px;
+    box-shadow: 0 36px 70px -24px rgba(40, 0, 99, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+  .cap-screen {
+    position: relative;
+    background: #e9e0d6;
+    border-radius: 28px;
+    overflow: hidden;
+    font-size: 11px;
+  }
+  .cap-statusbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px 4px;
+    background: #075e54;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .cap-statusbar span:last-child { letter-spacing: 1px; }
+  .cap-wa-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 14px 10px;
+    background: #075e54;
+    color: #fff;
+  }
+  .cap-wa-back { font-size: 15px; line-height: 1; opacity: 0.9; }
+  .cap-wa-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    flex: none;
+  }
+  .cap-wa-avatar svg { width: 18px; height: 18px; }
+  .cap-wa-name { line-height: 1.2; }
+  .cap-wa-name strong { font-size: 12px; font-weight: 600; display: block; }
+  .cap-wa-name span { font-size: 9px; opacity: 0.8; }
+  .cap-chat {
+    padding: 12px 11px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(124, 109, 240, 0.04), transparent 40%),
+      #e9e0d6;
+    min-height: 250px;
+  }
+  .cap-bubble {
+    max-width: 86%;
+    border-radius: 10px;
+    padding: 8px 9px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+    position: relative;
+  }
+  .cap-bubble.out { align-self: flex-end; background: #d9fdd3; }
+  .cap-bubble.in  { align-self: flex-start; background: #fff; }
+  .cap-bubble-time {
+    display: block;
+    text-align: right;
+    font-size: 8.5px;
+    color: #667781;
+    margin-top: 3px;
+  }
+  .cap-bubble.out .cap-bubble-time::after { content: ' ✓✓'; color: #34b7f1; }
+
+  /* voice memo bubble */
+  .cap-voice { display: flex; align-items: center; gap: 8px; }
+  .cap-voice-play {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #128c7e;
+    display: grid; place-items: center;
+    flex: none;
+  }
+  .cap-voice-play svg { width: 10px; height: 10px; color: #fff; }
+  .cap-wave { display: flex; align-items: center; gap: 2px; height: 18px; flex: 1; }
+  .cap-wave span {
+    width: 2px;
+    border-radius: 2px;
+    background: #95b5a4;
+  }
+  .cap-voice-dur {
+    font-size: 8.5px;
+    color: #667781;
+    font-family: 'JetBrains Mono', monospace;
+    flex: none;
+  }
+
+  /* photo bubble */
+  .cap-photo {
+    width: 150px;
+    height: 88px;
+    border-radius: 7px;
+    background:
+      linear-gradient(135deg, #c9bda8 0%, #a89878 55%, #8c7d5e 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .cap-photo::before {
+    content: '';
+    position: absolute;
+    left: 18%; bottom: 0; width: 26%; height: 62%;
+    background: rgba(255, 255, 255, 0.28);
+    transform: skewX(-6deg);
+  }
+  .cap-photo::after {
+    content: '';
+    position: absolute;
+    right: 14%; bottom: 0; width: 34%; height: 78%;
+    background: rgba(40, 0, 99, 0.16);
+  }
+  .cap-photo-tag {
+    position: absolute;
+    left: 6px; bottom: 6px;
+    font-size: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* Punchlister reply bubble */
+  .cap-reply-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+  .cap-reply-head svg { width: 14px; height: 14px; color: #1aa06d; flex: none; }
+  .cap-reply-list {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex; flex-direction: column; gap: 3px;
+  }
+  .cap-reply-list li {
+    font-size: 10px;
+    color: var(--ink-soft);
+    padding-left: 13px;
+    position: relative;
+    line-height: 1.35;
+  }
+  .cap-reply-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 6px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* ----- engine column ----- */
+  .capture-engine {
+    position: relative;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 0 6px;
+    overflow: visible;
+  }
+  .capture-engine .engine-rings { width: 168px; height: 168px; }
+  .capture-engine .engine-mark { width: 78px; height: 78px; }
+  .cap-wire {
+    position: absolute;
+    top: 84px;
+    height: 1.5px;
+    width: 64px;
+    background: repeating-linear-gradient(90deg, var(--accent-soft) 0 6px, transparent 6px 11px);
+    opacity: 0.55;
+    z-index: 0;
+  }
+  .cap-wire-l { left: -58px; }
+  .cap-wire-r { right: -58px; }
+  .cap-wire::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 0;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(124, 109, 240, 0.7);
+    transform: translateY(-50%);
+    animation: capDot 2.4s ease-in-out infinite;
+  }
+  .cap-wire-r::after { animation-delay: 1.2s; }
+  @keyframes capDot {
+    0% { left: 0; opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { left: calc(100% - 6px); opacity: 0; }
+  }
+  .cap-route {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: #fff;
+    border: 1px solid var(--accent-soft);
+    border-radius: 999px;
+    padding: 6px 13px;
+    box-shadow: 0 6px 16px rgba(124, 109, 240, 0.15);
+    margin-top: 4px;
+  }
+
+  /* ----- dashboard mockup ----- */
+  .cap-dash {
+    position: relative;
+    z-index: 2;
+    width: 340px;
+    max-width: 92%;
+    background: #fff;
+    border: 1px solid var(--rule-soft);
+    border-radius: 16px;
+    box-shadow: 0 36px 70px -28px rgba(40, 0, 99, 0.32);
+    overflow: hidden;
+    font-size: 11px;
+  }
+  .cap-dash-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--rule-soft);
+    background: var(--paper-warm);
+  }
+  .cap-dash-mark { width: 18px; height: 18px; flex: none; }
+  .cap-dash-bar strong { font-size: 11.5px; font-weight: 600; color: var(--ink); }
+  .cap-dash-bar .cap-dash-meta { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--muted); }
+  .cap-dash-sub {
+    padding: 9px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(124, 109, 240, 0.06);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  /* action feed */
+  .cap-actions { padding: 4px 16px 8px; }
+  .cap-action {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .cap-action:last-child { border-bottom: none; }
+  .cap-act-icon {
+    width: 27px; height: 27px;
+    border-radius: 7px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    background: var(--tile, #888);
+    box-shadow: 0 2px 6px rgba(40, 0, 99, 0.16);
+  }
+  .cap-act-icon svg { width: 15px; height: 15px; }
+  .cap-act-text { flex: 1; line-height: 1.25; min-width: 0; }
+  .cap-act-text strong {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cap-act-text span {
+    font-size: 9px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .cap-act-check { width: 16px; height: 16px; flex: none; color: #1aa06d; }
+  .cap-doc { padding: 14px 16px 16px; }
+  .cap-doc-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--rule-soft);
+    padding-bottom: 8px;
+    margin-bottom: 11px;
+  }
+  .cap-doc-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .cap-doc-time { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--muted); }
+  .cap-doc-block { margin-bottom: 10px; }
+  .cap-doc-block dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+  .cap-doc-block dd {
+    margin: 0;
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .cap-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 4px; }
+  .cap-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(124, 109, 240, 0.1);
+    color: var(--accent);
+  }
+  .cap-tag.mint { background: rgba(26, 160, 109, 0.12); color: #157a52; }
+  .cap-tag.pink { background: rgba(255, 171, 255, 0.22); color: #a23da2; }
+  .cap-dash-foot {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--rule-soft);
+    background: var(--paper);
+    font-size: 10.5px;
+    color: #157a52;
+    font-weight: 600;
+  }
+  .cap-dash-foot svg { width: 14px; height: 14px; flex: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cap-wire::after { animation: none; left: 50%; }
+    .cap-wave span { animation: none !important; }
+  }
+
+  @media (max-width: 940px) {
+    .capture { padding: 80px 0; }
+    .capture-stage {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 44px 0;
+      margin-top: 48px;
+    }
+    .capture-engine { order: 2; }
+    .capture-right { order: 3; }
+    .cap-wire { display: none; }
+    .cap-pills {
+      position: static;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 4px;
+      max-width: 360px;
+    }
+    .cap-pill {
+      position: static !important;
+      inset: auto !important;
+      top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+    }
+    .capture-side { padding-top: 0; }
+  }
 </style>
 </head>
 <body>
@@ -1809,6 +2294,179 @@
         <p>Je leest na. Je verstuurt.</p>
         <p>Elke beslissing, elke afspraak, elk openstaand punt komt in het projectdossier. Doorzoekbaar. Met tijdstempel. <strong>Beschikbaar wanneer je het nodig hebt.</strong></p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="capture" id="capteren">
+  <div class="container">
+    <div class="flow-head reveal">
+      <div class="flow-eyebrow">Eén app. Geen extra software.</div>
+      <h2>Je stuurt het via WhatsApp. <em>Punchlister voert het uit.</em></h2>
+      <p>Een spraakmemo, een foto van de werf, een snel bericht. Punchlister maakt er gestructureerde documenten van én voert de acties uit in de tools die je team al gebruikt — een offerte opmaken, een plan bijwerken in Bricsys, een dossier in SharePoint, opvolging in Salesforce, een clausule in je contract markeren.</p>
+    </div>
+
+    <div class="capture-stage reveal">
+
+      <!-- LEFT: capture via WhatsApp -->
+      <div class="capture-side capture-left">
+        <ul class="cap-pills cap-pills-left" aria-hidden="true">
+          <li class="cap-pill" style="--i:0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+            Spraakmemo
+          </li>
+          <li class="cap-pill" style="--i:1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3l1.5-2h9L18 8h3v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            Werffoto's
+          </li>
+          <li class="cap-pill" style="--i:2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1L19 8a2.1 2.1 0 0 0-3-3L5 16z"/><path d="M14 7l3 3"/></svg>
+            Handgeschreven notitie
+          </li>
+          <li class="cap-pill" style="--i:3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H8l-4 4z"/></svg>
+            Tekstbericht
+          </li>
+          <li class="cap-pill" style="--i:4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20z"/><path d="M12 9v5M12 17h0"/></svg>
+            Schadefoto
+          </li>
+        </ul>
+
+        <div class="cap-phone">
+          <div class="cap-screen">
+            <div class="cap-statusbar"><span>09:41</span><span>WhatsApp</span></div>
+            <div class="cap-wa-head">
+              <span class="cap-wa-back">‹</span>
+              <span class="cap-wa-avatar">
+                <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g transform="translate(0,38)"><path fill="#ffabff" d="M271.5,56.6h0c-5.2,19.2-22.6,32.6-42.5,32.6h-27.8l9.2-34.1h-124.6L100.2,1.2h128.8c28.9,0,50,27.4,42.5,55.4Z"/><path fill="#b2f9eb" d="M185.1,149.1l-14.4,53.8H55.4c-35.7,0-61.7-33.9-52.5-68.4L24.2,55.1h61.5l-25.2,94h124.5Z"/><path fill="#8b88f1" d="M201.2,89.3l9.2-34.1h-124.6,0s0,0,0,0l-25.2,94h31.3c0,0,0,0,0,0h13.8c5.4-5.4,9.4-11,12.2-16.4l69.1-43.4h14.2Z"/><path fill="#280063" d="M105.7,149.1c28.4-28.4,16-59.9,16-59.9h79.5l-95.5,59.9Z"/></g></svg>
+              </span>
+              <span class="cap-wa-name"><strong>Punchlister</strong><span>Werf Residentie Park</span></span>
+            </div>
+            <div class="cap-chat">
+              <div class="cap-bubble out">
+                <div class="cap-voice">
+                  <span class="cap-voice-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                  <span class="cap-wave">
+                    <span style="height:35%"></span><span style="height:70%"></span><span style="height:95%"></span><span style="height:55%"></span><span style="height:80%"></span><span style="height:40%"></span><span style="height:88%"></span><span style="height:60%"></span><span style="height:30%"></span><span style="height:72%"></span><span style="height:45%"></span><span style="height:85%"></span>
+                  </span>
+                  <span class="cap-voice-dur">1:24</span>
+                </div>
+                <span class="cap-bubble-time">09:38</span>
+              </div>
+              <div class="cap-bubble out" style="padding:5px">
+                <div class="cap-photo"><span class="cap-photo-tag">gevel — blok B</span></div>
+                <span class="cap-bubble-time">09:38</span>
+              </div>
+              <div class="cap-bubble in">
+                <div class="cap-reply-head">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.4 11 15.4 16.5 9"/></svg>
+                  Werfverslag aangemaakt
+                </div>
+                <ul class="cap-reply-list">
+                  <li>Gevelafwerking blok B besproken</li>
+                  <li>Meerwerk dakisolatie — raming bijgevoegd</li>
+                  <li>Afspraak onderaannemer: ten laatste 28/06</li>
+                </ul>
+                <span class="cap-bubble-time">09:38</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cap-caption">
+          <strong>Capteer via WhatsApp</strong>
+          <span>Op de werf, in 90 seconden</span>
+        </div>
+      </div>
+
+      <!-- CENTER: engine -->
+      <div class="capture-engine">
+        <span class="cap-wire cap-wire-l" aria-hidden="true"></span>
+        <span class="cap-wire cap-wire-r" aria-hidden="true"></span>
+        <div class="engine-rings">
+          <span class="engine-ring r1"></span>
+          <span class="engine-ring r2"></span>
+          <span class="engine-glow"></span>
+          <div class="engine-mark">
+            <svg viewBox="0 0 280 280" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(0,38)">
+                <path fill="#ffabff" d="M271.5,56.6h0c-5.2,19.2-22.6,32.6-42.5,32.6h-27.8l9.2-34.1h-124.6L100.2,1.2h128.8c28.9,0,50,27.4,42.5,55.4Z"/>
+                <path fill="#b2f9eb" d="M185.1,149.1l-14.4,53.8H55.4c-35.7,0-61.7-33.9-52.5-68.4L24.2,55.1h61.5l-25.2,94h124.5Z"/>
+                <path fill="#8b88f1" d="M201.2,89.3l9.2-34.1h-124.6,0s0,0,0,0l-25.2,94h31.3c0,0,0,0,0,0h13.8c5.4-5.4,9.4-11,12.2-16.4l69.1-43.4h14.2Z"/>
+                <path fill="#280063" d="M105.7,149.1c28.4-28.4,16-59.9,16-59.9h79.5l-95.5,59.9Z"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="engine-label">Punchlister</div>
+        <div class="cap-route">→ Documenten + acties</div>
+      </div>
+
+      <!-- RIGHT: documents + actions -->
+      <div class="capture-side capture-right">
+        <ul class="cap-pills cap-pills-right" aria-hidden="true">
+          <li class="cap-pill" style="--i:0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M13 3v5h5"/><path d="M9 13h6M9 16h4"/></svg>
+            Offerte opgemaakt
+          </li>
+          <li class="cap-pill" style="--i:1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.4"/><circle cx="17" cy="6" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M8 11 15 7M8 13l7 4"/></svg>
+            Gesynct naar je tools
+          </li>
+          <li class="cap-pill" style="--i:2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M6 8h12M6 8l-2.5 5a3 3 0 0 0 5 0zM18 8l-2.5 5a3 3 0 0 0 5 0z"/></svg>
+            Contract gemarkeerd
+          </li>
+        </ul>
+
+        <div class="cap-dash">
+          <div class="cap-dash-bar">
+            <svg class="cap-dash-mark" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g transform="translate(0,38)"><path fill="#ffabff" d="M271.5,56.6h0c-5.2,19.2-22.6,32.6-42.5,32.6h-27.8l9.2-34.1h-124.6L100.2,1.2h128.8c28.9,0,50,27.4,42.5,55.4Z"/><path fill="#b2f9eb" d="M185.1,149.1l-14.4,53.8H55.4c-35.7,0-61.7-33.9-52.5-68.4L24.2,55.1h61.5l-25.2,94h124.5Z"/><path fill="#8b88f1" d="M201.2,89.3l9.2-34.1h-124.6,0s0,0,0,0l-25.2,94h31.3c0,0,0,0,0,0h13.8c5.4-5.4,9.4-11,12.2-16.4l69.1-43.4h14.2Z"/><path fill="#280063" d="M105.7,149.1c28.4-28.4,16-59.9,16-59.9h79.5l-95.5,59.9Z"/></g></svg>
+            <strong>Residentie Park — Dossier</strong>
+            <span class="cap-dash-meta">14/05 · 09:38</span>
+          </div>
+          <div class="cap-dash-sub">Uit 1 spraakmemo — 6 acties uitgevoerd</div>
+          <div class="cap-actions">
+            <div class="cap-action">
+              <span class="cap-act-icon" style="--tile:#1a8fe3"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 6l8 6 8-6"/></svg></span>
+              <span class="cap-act-text"><strong>Werfverslag → bouwheer</strong><span>E-mail opgesteld</span></span>
+              <svg class="cap-act-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>
+            </div>
+            <div class="cap-action">
+              <span class="cap-act-icon" style="--tile:#7c6df0"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><path d="M10 12h4M10 15h4M10 9h2"/></svg></span>
+              <span class="cap-act-text"><strong>Offerte meerwerk € 4.180</strong><span>Opgemaakt</span></span>
+              <svg class="cap-act-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>
+            </div>
+            <div class="cap-action">
+              <span class="cap-act-icon" style="--tile:#c8472a"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 11 12 6 18"/><path d="M12 6 17 12 12 18"/></svg></span>
+              <span class="cap-act-text"><strong>Plan bijgewerkt</strong><span>Bricsys</span></span>
+              <svg class="cap-act-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>
+            </div>
+            <div class="cap-action">
+              <span class="cap-act-icon" style="--tile:#038387"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h7l2 2h7v9H4z"/><path d="M4 7V5h5l2 2"/></svg></span>
+              <span class="cap-act-text"><strong>Dossier gearchiveerd</strong><span>SharePoint</span></span>
+              <svg class="cap-act-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>
+            </div>
+            <div class="cap-action">
+              <span class="cap-act-icon" style="--tile:#00a1e0"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1.5A3.5 3.5 0 1 1 18 18z"/></svg></span>
+              <span class="cap-act-text"><strong>Opvolging aangemaakt</strong><span>Salesforce</span></span>
+              <svg class="cap-act-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>
+            </div>
+            <div class="cap-action">
+              <span class="cap-act-icon" style="--tile:#2d2356"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M6 8h12M6 8l-2.5 5a3 3 0 0 0 5 0zM18 8l-2.5 5a3 3 0 0 0 5 0z"/></svg></span>
+              <span class="cap-act-text"><strong>Garantieclausule gemarkeerd</strong><span>Contract · Wet Breyne</span></span>
+              <svg class="cap-act-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="cap-caption">
+          <strong>Documenten opgesteld, acties uitgevoerd</strong>
+          <span>jij leest na en bevestigt</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -2098,6 +2756,46 @@
         });
       }, { threshold: 0.3 });
       io.observe(diagram);
+    } else {
+      start();
+    }
+  })();
+
+  /* ============ CAPTURE / WHATSAPP PILLS ============ */
+  (function () {
+    var stage = document.querySelector('.capture-stage');
+    if (!stage) return;
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+
+    var pills = Array.prototype.slice.call(stage.querySelectorAll('.cap-pill'));
+    if (!pills.length) return;
+
+    var step = 0, timer = null, running = false;
+
+    function tick() {
+      pills.forEach(function (p) { p.classList.remove('active'); });
+      pills[step % pills.length].classList.add('active');
+      step++;
+    }
+    function start() {
+      if (running) return;
+      running = true;
+      tick();
+      timer = setInterval(tick, 1700);
+    }
+    function stop() {
+      running = false;
+      if (timer) { clearInterval(timer); timer = null; }
+      pills.forEach(function (p) { p.classList.remove('active'); });
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) start(); else stop(); });
+      }, { threshold: 0.3 });
+      io.observe(stage);
     } else {
       start();
     }
