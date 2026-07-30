@@ -659,6 +659,11 @@
               <label for="su-company">Bedrijfsnaam</label>
               <input id="su-company" name="companyName" type="text" required maxlength="120" placeholder="vb. Bouwbedrijf De Smet">
             </div>
+            <div class="field">
+              <label for="su-phone">WhatsApp-nummer</label>
+              <input id="su-phone" name="phone" type="tel" required maxlength="30" placeholder="+32 479 09 05 49" autocomplete="tel">
+              <div class="field-hint">Hiermee stuur je straks je werfnotities naar Punchlister — meteen gekoppeld aan je account, niets extra in te stellen.</div>
+            </div>
             <div class="field" id="passwordField">
               <label for="su-password">Wachtwoord</label>
               <input id="su-password" name="password" type="password" minlength="8" placeholder="Minstens 8 tekens" autocomplete="new-password">
@@ -822,9 +827,12 @@
       var email     = form.email.value.trim();
       var company   = form.companyName.value.trim();
 
+      var phone = form.phone.value.trim();
+
       if (!firstName || !lastName) { setStatus('err', 'Vul je voor- en achternaam in.'); return false; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('err', 'Geef een geldig werk-e-mailadres in.'); return false; }
       if (!company) { setStatus('err', 'Vul je bedrijfsnaam in.'); return false; }
+      if (phone.replace(/\D/g, '').length < 8) { setStatus('err', 'Geef een geldig WhatsApp-nummer in.'); return false; }
       if (!useMagicLink && passwordInput.value && passwordInput.value.length < 8) {
         setStatus('err', 'Je wachtwoord moet minstens 8 tekens lang zijn.'); return false;
       }
@@ -862,6 +870,7 @@
         lastName:    form.lastName.value.trim(),
         companyName: form.companyName.value.trim(),
         email:       form.email.value.trim(),
+        phone:       form.phone.value.trim(),
         password:    useMagicLink ? null : passwordInput.value,
         jobRole:     selectedRole
       };
