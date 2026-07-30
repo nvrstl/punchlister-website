@@ -377,14 +377,6 @@
     box-shadow: 0 0 0 3px rgba(124, 109, 240, 0.15);
   }
   .field-hint { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
-  .link-btn {
-    font: inherit; font-size: inherit; color: var(--accent); background: none; border: none;
-    padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
-  }
-  .magic-note {
-    font-size: 13px; color: var(--ink-soft); background: var(--paper-warm);
-    border-radius: 10px; padding: 12px 14px; line-height: 1.5;
-  }
   .signup-honeypot { position: absolute; left: -9999px; width: 0; height: 0; opacity: 0; }
 
   .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 22px; }
@@ -664,13 +656,9 @@
               <input id="su-phone" name="phone" type="tel" required maxlength="30" placeholder="+32 479 09 05 49" autocomplete="tel">
               <div class="field-hint">Hiermee stuur je straks je werfnotities naar Punchlister — meteen gekoppeld aan je account, niets extra in te stellen.</div>
             </div>
-            <div class="field" id="passwordField">
+            <div class="field">
               <label for="su-password">Wachtwoord</label>
-              <input id="su-password" name="password" type="password" minlength="8" placeholder="Minstens 8 tekens" autocomplete="new-password">
-              <div class="field-hint">Of <button type="button" class="link-btn" id="useMagicLink">ontvang een magic link per mail</button> — geen wachtwoord nodig.</div>
-            </div>
-            <div class="field" id="magicLinkField" hidden>
-              <div class="magic-note">Je krijgt een e-mail met een link om meteen zonder wachtwoord in te loggen. <button type="button" class="link-btn" id="usePassword">Toch liever een wachtwoord instellen?</button></div>
+              <input id="su-password" name="password" type="password" required minlength="8" placeholder="Minstens 8 tekens" autocomplete="new-password">
             </div>
           </div>
           <input class="signup-honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -732,20 +720,6 @@
       <p>Je wordt doorgestuurd naar de app om in te loggen…</p>
     </div>
 
-    <!-- Klaar — magic-link-pad -->
-    <div class="signup-done" id="signupDoneMagic" hidden>
-      <div class="signup-done-icon">✓</div>
-      <h2>Check je mailbox</h2>
-      <p>
-        We stuurden een e-mail naar <strong id="signupDoneEmail"></strong>.
-        Klik de link om meteen in te loggen.
-      </p>
-      <p class="signup-fineprint">
-        Niets ontvangen? Kijk even in je spam, of mail
-        <a href="mailto:hello@punchlister.ai">hello@punchlister.ai</a>.
-      </p>
-    </div>
-
     <p class="signup-login">
       Heb je al een account? <a href="https://app.punchlister.ai">Log in →</a>
     </p>
@@ -779,14 +753,9 @@
     var status         = document.getElementById('signupStatus');
     var button         = document.getElementById('signupButton');
     var donePassword   = document.getElementById('signupDonePassword');
-    var doneMagic       = document.getElementById('signupDoneMagic');
-    var doneEmail       = document.getElementById('signupDoneEmail');
-    var passwordField  = document.getElementById('passwordField');
-    var magicLinkField = document.getElementById('magicLinkField');
     var passwordInput  = document.getElementById('su-password');
     var roleGrid       = document.getElementById('roleGrid');
 
-    var useMagicLink = false;
     var selectedRole = 'projectleider';
 
     function setStatus(kind, message) {
@@ -833,24 +802,11 @@
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('err', 'Geef een geldig werk-e-mailadres in.'); return false; }
       if (!company) { setStatus('err', 'Vul je bedrijfsnaam in.'); return false; }
       if (phone.replace(/\D/g, '').length < 8) { setStatus('err', 'Geef een geldig WhatsApp-nummer in.'); return false; }
-      if (!useMagicLink && passwordInput.value && passwordInput.value.length < 8) {
-        setStatus('err', 'Je wachtwoord moet minstens 8 tekens lang zijn.'); return false;
+      if (!passwordInput.value || passwordInput.value.length < 8) {
+        setStatus('err', 'Kies een wachtwoord van minstens 8 tekens.'); return false;
       }
-      if (!useMagicLink && !passwordInput.value) { setStatus('err', 'Kies een wachtwoord, of vraag een magic link aan.'); return false; }
       return true;
     }
-
-    document.getElementById('useMagicLink').addEventListener('click', function () {
-      useMagicLink = true;
-      passwordField.hidden = true;
-      magicLinkField.hidden = false;
-      passwordInput.required = false;
-    });
-    document.getElementById('usePassword').addEventListener('click', function () {
-      useMagicLink = false;
-      passwordField.hidden = false;
-      magicLinkField.hidden = true;
-    });
 
     roleGrid.querySelectorAll('.role-card').forEach(function (card) {
       card.addEventListener('click', function () {
@@ -871,7 +827,7 @@
         companyName: form.companyName.value.trim(),
         email:       form.email.value.trim(),
         phone:       form.phone.value.trim(),
-        password:    useMagicLink ? null : passwordInput.value,
+        password:    passwordInput.value,
         jobRole:     selectedRole
       };
 
@@ -892,14 +848,9 @@
           if (res.ok && res.json && res.json.success) {
             form.hidden = true;
             document.getElementById('wizStepper').hidden = true;
-            if (useMagicLink) {
-              doneEmail.textContent = data.email;
-              doneMagic.hidden = false;
-            } else {
-              donePassword.hidden = false;
-              var redirectTo = (res.json.redirectTo) || ('https://app.punchlister.ai/login?email=' + encodeURIComponent(data.email));
-              setTimeout(function () { window.location.href = redirectTo; }, 1200);
-            }
+            donePassword.hidden = false;
+            var redirectTo = (res.json.redirectTo) || ('https://app.punchlister.ai/login?email=' + encodeURIComponent(data.email));
+            setTimeout(function () { window.location.href = redirectTo; }, 1200);
           } else {
             showPanel(2);
             setStatus('err', (res.json && res.json.error) || 'Er ging iets mis. Probeer opnieuw of mail hello@punchlister.ai.');
