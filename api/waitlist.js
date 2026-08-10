@@ -56,9 +56,25 @@ module.exports = async function handler(req, res) {
   }
 
   const name = `${firstName} ${lastName}`.trim();
-  const subject = `Wachtlijst-aanmelding — ${companyName} (${name})`;
 
-  const text =
+  async function sendEmail(payload) {
+    const resp = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) {
+      const errText = await resp.text();
+      throw new Error(`resend ${resp.status}: ${errText}`);
+    }
+  }
+
+  // 1. Internal notification — this is the actual lead capture, so a failure here fails the request.
+  const notifySubject = `Wachtlijst-aanmelding — ${companyName} (${name})`;
+  const notifyText =
 `Nieuwe wachtlijst-aanmelding (Start gratis)
 
 Bedrijf:   ${companyName}
@@ -72,7 +88,7 @@ ${message || '—'}
 ---
 Verstuurd via punchlister.com "Start gratis".`;
 
-  const html = `
+  const notifyHtml = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 560px; color:#1a1240;">
       <h2 style="margin:0 0 16px;font-weight:500;">Nieuwe wachtlijst-aanmelding</h2>
       <table style="width:100%;border-collapse:collapse;font-size:14px;">
@@ -86,31 +102,49 @@ Verstuurd via punchlister.com "Start gratis".`;
     </div>`;
 
   try {
-    const resp = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        from: fromAddr,
-        to: toList,
-        reply_to: replyTo,
-        subject,
-        text,
-        html
-      })
-    });
-
-    if (!resp.ok) {
-      const errText = await resp.text();
-      console.error('resend error', resp.status, errText);
-      return bad(res, 502, 'Mail service error');
-    }
-
-    return res.status(200).json({ ok: true });
+    await sendEmail({ from: fromAddr, to: toList, reply_to: replyTo, subject: notifySubject, text: notifyText, html: notifyHtml });
   } catch (err) {
-    console.error('waitlist: send failed', err);
-    return bad(res, 500, 'Failed to send');
+    console.error('waitlist: internal notify failed', err);
+    return bad(res, 502, 'Mail service error');
   }
+
+  // 2. Confirmation to the applicant — best-effort. Its failure shouldn't fail the lead capture,
+  // since the internal notification above already succeeded.
+  try {
+    const confirmSubject = 'Je staat op de wachtlijst — Punchlister';
+    const confirmText =
+`Hoi ${firstName},
+
+Bedankt voor je aanmelding voor Punchlister namens ${companyName}.
+
+We nemen meestal binnen één werkdag contact met je op om je bedrijf gratis klaar te zetten voor de gesloten bèta.
+
+Vragen in de tussentijd? Antwoord gewoon op deze e-mail.
+
+Tot binnenkort,
+Het Punchlister-team`;
+
+    const confirmHtml = `
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 480px; color:#1a1240;">
+        <h2 style="margin:0 0 16px;font-weight:500;">Je staat op de wachtlijst</h2>
+        <p style="font-size:14px;line-height:1.6;">Hoi ${escapeHtml(firstName)},</p>
+        <p style="font-size:14px;line-height:1.6;">Bedankt voor je aanmelding voor Punchlister namens <strong>${escapeHtml(companyName)}</strong>.</p>
+        <p style="font-size:14px;line-height:1.6;">We nemen meestal binnen één werkdag contact met je op om je bedrijf gratis klaar te zetten voor de gesloten bèta.</p>
+        <p style="font-size:14px;line-height:1.6;">Vragen in de tussentijd? Antwoord gewoon op deze e-mail.</p>
+        <p style="font-size:14px;line-height:1.6;">Tot binnenkort,<br>Het Punchlister-team</p>
+      </div>`;
+
+    await sendEmail({
+      from: fromAddr,
+      to: [`${name} <${email}>`],
+      reply_to: toList[0] || fromAddr,
+      subject: confirmSubject,
+      text: confirmText,
+      html: confirmHtml
+    });
+  } catch (err) {
+    console.error('waitlist: confirmation email failed', err);
+  }
+
+  return res.status(200).json({ ok: true });
 };
