@@ -131,13 +131,34 @@
   }
   .wl-eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
 
+  /* ---- progress ---- */
+  .wl-progress { margin-bottom: 22px; }
+  .wl-progress-track { height: 4px; background: var(--rule-soft); border-radius: 999px; overflow: hidden; }
+  .wl-progress-fill { height: 100%; width: 25%; background: var(--accent); border-radius: 999px; transition: width .45s cubic-bezier(.65,0,.35,1); }
+  .wl-progress-label {
+    display: flex; justify-content: space-between; align-items: center; margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em;
+    color: var(--muted); text-transform: uppercase;
+  }
+
   .wl-card {
     background: #fff; border: 1px solid var(--rule-soft); border-radius: 18px;
     padding: 34px 30px; box-shadow: 0 8px 30px rgba(26, 18, 64, 0.06);
+    overflow: hidden;
   }
   .wl-card h1 { font-size: clamp(26px, 4vw, 32px); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 10px; color: var(--ink); }
   .wl-sub { color: var(--muted); font-size: 15.5px; margin-bottom: 26px; }
   .wl-sub strong { color: var(--ink-soft); font-weight: 600; }
+
+  /* ---- step panels ---- */
+  .wl-panel { animation: wlPanelIn .42s cubic-bezier(.16,1,.3,1); }
+  @keyframes wlPanelIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wl-panel { animation: none; }
+  }
 
   .explain-box {
     border: 1px solid var(--rule-soft); border-radius: 12px;
@@ -179,9 +200,14 @@
   .wl-status.show { display: block; }
   .wl-status.err { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
 
-  .wl-actions { margin-top: 22px; }
+  .wl-actions { display: flex; align-items: center; gap: 14px; margin-top: 26px; }
+  .wl-back {
+    font: inherit; font-size: 14px; font-weight: 500; color: var(--muted);
+    background: none; border: none; cursor: pointer; padding: 10px 4px; flex-shrink: 0;
+  }
+  .wl-back:hover { color: var(--ink); }
   .wl-cta {
-    width: 100%; font-family: inherit; font-weight: 500; font-size: 15px;
+    flex: 1; font-family: inherit; font-weight: 500; font-size: 15px;
     color: var(--paper); background: var(--ink-deep); border: none; border-radius: 999px;
     padding: 14px 22px; cursor: pointer;
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -196,6 +222,7 @@
   .wl-done {
     background: #fff; border: 1px solid var(--rule-soft); border-radius: 18px;
     padding: 40px 30px; text-align: center; box-shadow: 0 8px 30px rgba(26, 18, 64, 0.06);
+    animation: wlPanelIn .42s cubic-bezier(.16,1,.3,1);
   }
   .wl-done-icon {
     width: 46px; height: 46px; border-radius: 50%; background: #d4f0e0; color: #166534;
@@ -268,63 +295,111 @@
   <div class="container wl-wrap">
     <div class="wl-eyebrow">Gesloten bèta</div>
 
+    <div class="wl-progress" id="wlProgress">
+      <div class="wl-progress-track"><div class="wl-progress-fill" id="wlProgressFill"></div></div>
+      <div class="wl-progress-label"><span id="wlStepLabel">Stap 1 van 4</span><span>~1 minuut</span></div>
+    </div>
+
     <form id="waitlistForm" novalidate>
       <div class="wl-card">
-        <h1>Zet je bedrijf op de lijst.</h1>
-        <p class="wl-sub">Punchlister is nog niet publiek open. Laat je gegevens achter en we nemen <strong>persoonlijk contact</strong> op om je bedrijf gratis klaar te zetten.</p>
-
-        <div class="explain-box">
-          <div class="explain-row">
-            <span class="ex-num">1</span>
-            <div class="ex-body"><strong>Jij laat je gegevens achter</strong>Bedrijfsnaam, naam en e-mailadres. Geen wachtwoord, geen installatie, geen kredietkaart.</div>
-          </div>
-          <div class="explain-row">
-            <span class="ex-num">2</span>
-            <div class="ex-body"><strong>Wij nemen contact op</strong>Meestal binnen één werkdag plannen we een korte kennismaking en zetten we je bedrijf klaar.</div>
-          </div>
-          <div class="explain-row">
-            <span class="ex-num">3</span>
-            <div class="ex-body"><strong>Je start gratis</strong>Zodra je account klaarstaat, kan je meteen punchlisten. Geen kosten tijdens de bèta.</div>
-          </div>
-        </div>
 
         <div class="wl-status" id="wlStatus" role="status" aria-live="polite"></div>
 
-        <div class="wl-fields">
-          <div class="field-row">
-            <div class="field">
-              <label for="wl-first">Voornaam</label>
-              <input id="wl-first" name="firstName" type="text" required maxlength="80" placeholder="Karel" autocomplete="given-name">
-            </div>
-            <div class="field">
-              <label for="wl-last">Naam</label>
-              <input id="wl-last" name="lastName" type="text" required maxlength="80" placeholder="Mertens" autocomplete="family-name">
-            </div>
-          </div>
-          <div class="field">
-            <label for="wl-email">Werk-e-mailadres</label>
-            <input id="wl-email" name="email" type="email" required maxlength="200" placeholder="naam@bedrijf.be" autocomplete="email">
-          </div>
-          <div class="field">
-            <label for="wl-company">Bedrijfsnaam</label>
-            <input id="wl-company" name="companyName" type="text" required maxlength="120" placeholder="vb. Bouwbedrijf De Smet">
-          </div>
-          <div class="field">
-            <label for="wl-phone">Telefoon- of WhatsApp-nummer</label>
-            <input id="wl-phone" name="phone" type="tel" maxlength="30" placeholder="+32 479 09 05 49" autocomplete="tel">
-            <div class="field-hint">Optioneel — handig als we je snel willen bereiken om je bedrijf klaar te zetten.</div>
-          </div>
-          <div class="field">
-            <label for="wl-message">Korte boodschap (optioneel)</label>
-            <textarea id="wl-message" name="message" rows="3" maxlength="1000" placeholder="Waar loop je nu tegenaan op de werf?"></textarea>
-          </div>
-        </div>
-        <input class="wl-honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <!-- STAP 1 — uitleg, geen invoer -->
+        <section class="wl-panel" data-panel="1">
+          <h1>Zet je bedrijf op de lijst.</h1>
+          <p class="wl-sub">Punchlister is nog niet publiek open. In iets minder dan een minuut weten we genoeg om <strong>persoonlijk contact</strong> op te nemen.</p>
 
-        <div class="wl-actions">
-          <button type="submit" class="wl-cta" id="waitlistButton">Zet me op de lijst <span class="cta-arrow">→</span></button>
-        </div>
-        <p class="wl-fineprint">We gebruiken je gegevens enkel om contact op te nemen over toegang tot Punchlister. Geen nieuwsbrief, geen doorverkoop.</p>
+          <div class="explain-box">
+            <div class="explain-row">
+              <span class="ex-num">1</span>
+              <div class="ex-body"><strong>Jij laat je gegevens achter</strong>Bedrijfsnaam, naam en e-mailadres. Geen wachtwoord, geen installatie, geen kredietkaart.</div>
+            </div>
+            <div class="explain-row">
+              <span class="ex-num">2</span>
+              <div class="ex-body"><strong>Wij nemen contact op</strong>Meestal binnen één werkdag plannen we een korte kennismaking en zetten we je bedrijf klaar.</div>
+            </div>
+            <div class="explain-row">
+              <span class="ex-num">3</span>
+              <div class="ex-body"><strong>Je start gratis</strong>Zodra je account klaarstaat, kan je meteen punchlisten. Geen kosten tijdens de bèta.</div>
+            </div>
+          </div>
+
+          <div class="wl-actions">
+            <button type="button" class="wl-cta" data-next>Ja, laten we starten <span class="cta-arrow">→</span></button>
+          </div>
+        </section>
+
+        <!-- STAP 2 — naam -->
+        <section class="wl-panel" data-panel="2" hidden>
+          <h1>Hoe mogen we je noemen?</h1>
+          <p class="wl-sub">Zodat we je straks persoonlijk kunnen aanspreken.</p>
+
+          <div class="wl-fields">
+            <div class="field-row">
+              <div class="field">
+                <label for="wl-first">Voornaam</label>
+                <input id="wl-first" name="firstName" type="text" required maxlength="80" placeholder="Karel" autocomplete="given-name">
+              </div>
+              <div class="field">
+                <label for="wl-last">Naam</label>
+                <input id="wl-last" name="lastName" type="text" required maxlength="80" placeholder="Mertens" autocomplete="family-name">
+              </div>
+            </div>
+          </div>
+
+          <div class="wl-actions">
+            <button type="button" class="wl-back" data-back>← Terug</button>
+            <button type="button" class="wl-cta" data-next>Verder <span class="cta-arrow">→</span></button>
+          </div>
+        </section>
+
+        <!-- STAP 3 — bedrijf + e-mail -->
+        <section class="wl-panel" data-panel="3" hidden>
+          <h1>Voor welk bedrijf werk je?</h1>
+          <p class="wl-sub">En op welk werk-e-mailadres bereiken we je het best?</p>
+
+          <div class="wl-fields">
+            <div class="field">
+              <label for="wl-company">Bedrijfsnaam</label>
+              <input id="wl-company" name="companyName" type="text" required maxlength="120" placeholder="vb. Bouwbedrijf De Smet">
+            </div>
+            <div class="field">
+              <label for="wl-email">Werk-e-mailadres</label>
+              <input id="wl-email" name="email" type="email" required maxlength="200" placeholder="naam@bedrijf.be" autocomplete="email">
+            </div>
+          </div>
+
+          <div class="wl-actions">
+            <button type="button" class="wl-back" data-back>← Terug</button>
+            <button type="button" class="wl-cta" data-next>Verder <span class="cta-arrow">→</span></button>
+          </div>
+        </section>
+
+        <!-- STAP 4 — optioneel + versturen -->
+        <section class="wl-panel" data-panel="4" hidden>
+          <h1>Nog iets dat helpt?</h1>
+          <p class="wl-sub">Beide velden zijn optioneel — maar helpen ons om je sneller te woord te staan.</p>
+
+          <div class="wl-fields">
+            <div class="field">
+              <label for="wl-phone">Telefoon- of WhatsApp-nummer</label>
+              <input id="wl-phone" name="phone" type="tel" maxlength="30" placeholder="+32 479 09 05 49" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="wl-message">Korte boodschap</label>
+              <textarea id="wl-message" name="message" rows="3" maxlength="1000" placeholder="Waar loop je nu tegenaan op de werf?"></textarea>
+            </div>
+          </div>
+          <input class="wl-honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <div class="wl-actions">
+            <button type="button" class="wl-back" data-back>← Terug</button>
+            <button type="submit" class="wl-cta" id="waitlistButton">Zet me op de lijst <span class="cta-arrow">→</span></button>
+          </div>
+          <p class="wl-fineprint">We gebruiken je gegevens enkel om contact op te nemen over toegang tot Punchlister. Geen nieuwsbrief, geen doorverkoop.</p>
+        </section>
+
       </div>
     </form>
 
@@ -352,14 +427,21 @@
 </footer>
 
 <script>
+  /* ============ STEP WIZARD ============ */
   (function () {
     var API = '/api/waitlist';
 
-    var form   = document.getElementById('waitlistForm');
-    var status = document.getElementById('wlStatus');
-    var button = document.getElementById('waitlistButton');
-    var done   = document.getElementById('waitlistDone');
+    var form     = document.getElementById('waitlistForm');
+    var status   = document.getElementById('wlStatus');
+    var button   = document.getElementById('waitlistButton');
+    var done     = document.getElementById('waitlistDone');
+    var progress = document.getElementById('wlProgress');
+    var fill     = document.getElementById('wlProgressFill');
+    var stepLbl  = document.getElementById('wlStepLabel');
     if (!form) return;
+
+    var panels = Array.prototype.slice.call(form.querySelectorAll('.wl-panel'));
+    var total  = panels.length;
 
     function setStatus(kind, message) {
       status.className = 'wl-status show ' + kind;
@@ -367,7 +449,62 @@
     }
     function clearStatus() { status.className = 'wl-status'; }
 
-    function validate() {
+    function panelOf(n) {
+      return form.querySelector('.wl-panel[data-panel="' + n + '"]');
+    }
+
+    function showPanel(n) {
+      panels.forEach(function (p) { p.hidden = (Number(p.getAttribute('data-panel')) !== n); });
+      fill.style.width = Math.round((n / total) * 100) + '%';
+      stepLbl.textContent = 'Stap ' + n + ' van ' + total;
+      clearStatus();
+      var active = panelOf(n);
+      var firstField = active && active.querySelector('input, textarea');
+      if (firstField) { setTimeout(function () { firstField.focus(); }, 280); }
+    }
+
+    function validatePanel(n) {
+      clearStatus();
+      if (n === 2) {
+        var firstName = form.firstName.value.trim();
+        var lastName  = form.lastName.value.trim();
+        if (!firstName || !lastName) { setStatus('err', 'Vul je voor- en achternaam in.'); return false; }
+      }
+      if (n === 3) {
+        var company = form.companyName.value.trim();
+        var email   = form.email.value.trim();
+        if (!company) { setStatus('err', 'Vul je bedrijfsnaam in.'); return false; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('err', 'Geef een geldig werk-e-mailadres in.'); return false; }
+      }
+      return true;
+    }
+
+    form.querySelectorAll('[data-next]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var n = Number(btn.closest('.wl-panel').getAttribute('data-panel'));
+        if (!validatePanel(n)) return;
+        showPanel(n + 1);
+      });
+    });
+    form.querySelectorAll('[data-back]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var n = Number(btn.closest('.wl-panel').getAttribute('data-panel'));
+        showPanel(n - 1);
+      });
+    });
+
+    // Enter-to-continue on text inputs (not textareas, so Enter still makes a newline there)
+    form.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' || e.target.tagName === 'TEXTAREA') return;
+      var active = form.querySelector('.wl-panel:not([hidden])');
+      if (!active) return;
+      var next = active.querySelector('[data-next]');
+      var submit = active.querySelector('button[type="submit"]');
+      if (next) { e.preventDefault(); next.click(); }
+      else if (submit) { e.preventDefault(); submit.click(); }
+    });
+
+    function validateAll() {
       clearStatus();
       var firstName = form.firstName.value.trim();
       var lastName  = form.lastName.value.trim();
@@ -383,7 +520,7 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (form.website && form.website.value) return; // honeypot
-      if (!validate()) return;
+      if (!validateAll()) { showPanel(2); return; }
 
       var data = {
         firstName:   form.firstName.value.trim(),
@@ -410,6 +547,7 @@
         .then(function (res) {
           if (res.ok && res.json && res.json.ok) {
             form.hidden = true;
+            progress.hidden = true;
             done.hidden = false;
             window.scrollTo({ top: 0, behavior: 'smooth' });
           } else {
@@ -424,6 +562,8 @@
           button.innerHTML = originalLabel;
         });
     });
+
+    showPanel(1);
   })();
 </script>
 
