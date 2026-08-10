@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start gratis — Punchlister</title>
+<meta name="description" content="Punchlister is in gesloten bèta. Laat je gegevens achter en we nemen persoonlijk contact op om je bedrijf gratis te onboarden.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Google Sans';
+    src: url('assets/fonts/GoogleSans-Regular.ttf') format('truetype');
+    font-weight: 400; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Google Sans';
+    src: url('assets/fonts/GoogleSans-Medium.ttf') format('truetype');
+    font-weight: 500; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Google Sans';
+    src: url('assets/fonts/GoogleSans-SemiBold.ttf') format('truetype');
+    font-weight: 600; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Google Sans';
+    src: url('assets/fonts/GoogleSans-Bold.ttf') format('truetype');
+    font-weight: 700; font-style: normal; font-display: swap;
+  }
+
+  :root {
+    --ink: #1a1240;
+    --ink-deep: #0f0a2e;
+    --ink-soft: #2d2356;
+    --paper: #faf8f3;
+    --paper-warm: #f3eee3;
+    --rule: #d9d3c4;
+    --rule-soft: #ebe6d9;
+    --accent: #7c6df0;
+    --muted: #6b6280;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Google Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ============ HEADER ============ */
+  header { padding: 22px 0; }
+
+  .header-inner {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(26, 18, 64, 0.06);
+    border-radius: 999px;
+    padding: 10px 12px 10px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 760px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(26, 18, 64, 0.04);
+  }
+
+  .logo { display: inline-flex; align-items: center; text-decoration: none; border-bottom: none; }
+  .logo svg { height: 22px; width: auto; display: block; }
+
+  .nav-cta {
+    font-family: 'Google Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--paper);
+    background: var(--ink-deep);
+    text-decoration: none;
+    border-bottom: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    transition: background 0.2s ease;
+  }
+  .nav-cta:hover { background: var(--accent); }
+
+  .top-nav { display: flex; align-items: center; gap: 4px; }
+
+  /* ============ CONTENT ============ */
+  main { padding: 60px 0 100px; }
+
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--rule-soft);
+    background: var(--paper);
+  }
+  .footer-inner {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--muted);
+  }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: var(--muted); text-decoration: none; border-bottom: none; transition: color 0.2s ease; }
+  .footer-links a:hover { color: var(--ink); }
+
+  @media (max-width: 768px) {
+    .container { padding: 0 20px; }
+    main { padding: 40px 0 70px; }
+    .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  /* ============ WAITLIST FORM ============ */
+  .wl-wrap { max-width: 640px; padding-top: 46px; padding-bottom: 90px; }
+
+  .wl-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent);
+    display: inline-flex; align-items: center; gap: 9px; margin-bottom: 18px;
+  }
+  .wl-eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+
+  .wl-card {
+    background: #fff; border: 1px solid var(--rule-soft); border-radius: 18px;
+    padding: 34px 30px; box-shadow: 0 8px 30px rgba(26, 18, 64, 0.06);
+  }
+  .wl-card h1 { font-size: clamp(26px, 4vw, 32px); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 10px; color: var(--ink); }
+  .wl-sub { color: var(--muted); font-size: 15.5px; margin-bottom: 26px; }
+  .wl-sub strong { color: var(--ink-soft); font-weight: 600; }
+
+  .explain-box {
+    border: 1px solid var(--rule-soft); border-radius: 12px;
+    padding: 4px 0; margin-bottom: 28px;
+  }
+  .explain-row { display: flex; gap: 14px; align-items: flex-start; padding: 15px 18px; border-bottom: 1px solid var(--rule-soft); }
+  .explain-row:last-child { border-bottom: none; }
+  .ex-num {
+    width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    background: var(--paper-warm); color: var(--accent);
+    border: 1px solid rgba(124, 109, 240, 0.35);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+  }
+  .ex-body { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+  .ex-body strong { color: var(--ink); font-weight: 600; display: block; margin-bottom: 2px; font-size: 14px; }
+
+  .wl-fields { display: flex; flex-direction: column; gap: 16px; margin-bottom: 6px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 500; color: var(--ink-soft); margin-bottom: 6px; }
+  .field input, .field textarea {
+    width: 100%; font-family: inherit; font-size: 15px; color: var(--ink);
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 10px;
+    padding: 12px 14px; resize: vertical;
+    transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .field input::placeholder, .field textarea::placeholder { color: #a9a3bb; }
+  .field input:focus, .field textarea:focus {
+    outline: none; background: #fff; border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(124, 109, 240, 0.15);
+  }
+  .field-hint { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+  .wl-honeypot { position: absolute; left: -9999px; width: 0; height: 0; opacity: 0; }
+
+  .wl-status {
+    display: none; font-size: 13.5px; border-radius: 10px;
+    padding: 10px 13px; margin-bottom: 16px;
+  }
+  .wl-status.show { display: block; }
+  .wl-status.err { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+
+  .wl-actions { margin-top: 22px; }
+  .wl-cta {
+    width: 100%; font-family: inherit; font-weight: 500; font-size: 15px;
+    color: var(--paper); background: var(--ink-deep); border: none; border-radius: 999px;
+    padding: 14px 22px; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background .2s ease;
+  }
+  .wl-cta:hover:not(:disabled) { background: var(--accent); }
+  .wl-cta:disabled { opacity: .6; cursor: default; }
+
+  .wl-fineprint { font-size: 12.5px; color: var(--muted); margin-top: 14px; text-align: center; line-height: 1.5; }
+  .wl-fineprint a { color: var(--accent); }
+
+  .wl-done {
+    background: #fff; border: 1px solid var(--rule-soft); border-radius: 18px;
+    padding: 40px 30px; text-align: center; box-shadow: 0 8px 30px rgba(26, 18, 64, 0.06);
+  }
+  .wl-done-icon {
+    width: 46px; height: 46px; border-radius: 50%; background: #d4f0e0; color: #166534;
+    font-size: 22px; display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .wl-done h2 { font-size: 22px; margin-bottom: 10px; letter-spacing: -0.01em; color: var(--ink); }
+  .wl-done p { color: var(--muted); font-size: 15px; max-width: 44ch; margin: 0 auto; }
+
+  .wl-login { margin-top: 26px; font-size: 14px; color: var(--muted); text-align: center; }
+  .wl-login a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .wl-login a:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    .wl-card, .wl-done { padding: 22px; }
+    .wl-wrap { padding-top: 30px; }
+    .field-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="Punchlister">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 203.5" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <defs>
+            <style>
+              .pl-st1 { fill: #8b88f1; }
+              .pl-st2 { fill: #ffabff; }
+              .pl-st4 { fill: #7669ff; }
+              .pl-st5 { fill: #b2f9eb; }
+              .pl-st6 { fill: #280063; }
+            </style>
+          </defs>
+          <g>
+            <path class="pl-st2" d="M271.5,56.6h0c-5.2,19.2-22.6,32.6-42.5,32.6h-27.8l9.2-34.1h-124.6L100.2,1.2h128.8c28.9,0,50,27.4,42.5,55.4Z"/>
+            <path class="pl-st5" d="M185.1,149.1l-14.4,53.8H55.4c-35.7,0-61.7-33.9-52.5-68.4L24.2,55.1h61.5l-25.2,94h124.5Z"/>
+            <path class="pl-st1" d="M201.2,89.3l9.2-34.1h-124.6,0s0,0,0,0l-25.2,94h31.3c0,0,0,0,0,0h13.8c5.4-5.4,9.4-11,12.2-16.4l69.1-43.4h14.2Z"/>
+            <path class="pl-st6" d="M105.7,149.1c28.4-28.4,16-59.9,16-59.9h79.5l-95.5,59.9Z"/>
+            <g>
+              <g>
+                <path class="pl-st6" d="M376.5,54.7c-5.1-2.7-10.8-4-17.1-4h-35.5v101.8h17.5v-38.4h18.1c6.3,0,11.9-1.4,17.1-4,5.1-2.7,9.2-6.4,12.2-11.2,3-4.8,4.5-10.3,4.5-16.6s-1.5-11.7-4.5-16.5c-3-4.7-7.1-8.4-12.2-11.1ZM374.2,89.8c-1.2,2.3-3.1,4.2-5.5,5.7-2.4,1.5-5.4,2.2-8.9,2.2h-18.5v-30.4h18.5c3.5,0,6.5.7,8.9,2.2,2.4,1.5,4.2,3.3,5.5,5.6,1.2,2.3,1.8,4.7,1.8,7.2s-.6,5.1-1.8,7.5Z"/>
+                <path class="pl-st6" d="M455.2,118c0,3.8-.7,7.3-2.1,10.5-1.4,3.2-3.5,5.8-6.3,7.7-2.8,1.9-6,2.9-9.8,2.9s-7.4-1.4-10.1-4.3c-2.7-2.8-4-7-4-12.5v-42.4h-16.9v44.5c0,9.4,2.2,16.8,6.7,22.2,4.5,5.4,11.1,8.1,20,8.1s6.4-.5,9.2-1.5c2.8-1,5.4-2.4,7.7-4.2,2.3-1.8,4.1-3.8,5.5-6.1h1v9.5h16.1v-72.5h-17.1v38Z"/>
+                <path class="pl-st6" d="M529.4,77.8c-4.7,0-9.1,1.1-13.2,3.3-4.1,2.2-7.2,5-9.2,8.5h-1v-9.5h-15.9v72.5h16.9v-38c0-3.8.7-7.3,2.2-10.4,1.5-3.2,3.5-5.7,6.2-7.7,2.6-1.9,5.7-2.9,9.2-2.9s8,1.3,10.7,3.9c2.7,2.6,4,6.6,4,11.9v43.2h17.1v-45.5c0-8.8-2.3-15.9-6.8-21.3-4.5-5.4-11.2-8-20.1-8Z"/>
+                <path class="pl-st6" d="M618.2,136.2c-3,2-6.7,3-11.2,3s-7.3-.9-10.4-2.8c-3.1-1.9-5.6-4.5-7.5-8-1.8-3.4-2.8-7.4-2.8-12.1s.9-8.7,2.8-12.1c1.8-3.4,4.3-6,7.5-7.9,3.1-1.8,6.6-2.8,10.4-2.8s7.7.9,10.7,2.6c2.9,1.8,5.2,4.4,6.8,8l15.5-6.5c-2.5-6.3-6.5-11.1-12.2-14.6-5.6-3.5-12.5-5.3-20.7-5.3s-13.8,1.7-19.5,5c-5.7,3.3-10.1,7.9-13.4,13.6s-4.8,12.4-4.8,19.9,1.6,14,4.8,19.8c3.2,5.8,7.7,10.4,13.4,13.7,5.7,3.3,12.2,5,19.5,5s15-1.9,20.7-5.6,9.8-8.6,12.6-14.6l-15.2-6.7c-1.7,3.5-4,6.3-7,8.2Z"/>
+                <path class="pl-st6" d="M707.5,81.4c-4.1-2.4-9.1-3.6-15.1-3.6s-9.3,1.1-13.3,3.3c-4,2.2-7.1,5-9.2,8.5h-1l1-11.9v-26.9h-16.9v101.8h16.9v-37.7c0-3.9.8-7.4,2.3-10.7,1.5-3.2,3.6-5.8,6.3-7.7,2.7-1.9,5.8-2.9,9.3-2.9s5.4.6,7.6,1.7c2.2,1.1,4,2.9,5.3,5.2,1.3,2.3,1.9,5.3,1.9,8.9v43.2h17.1v-45.5c0-5.9-1-11-3.1-15.4-2-4.4-5.1-7.8-9.2-10.2Z"/>
+                <rect class="pl-st6" x="736.9" y="50.8" width="16.9" height="101.8"/>
+                <rect class="pl-st6" x="771.8" y="80" width="16.9" height="72.5"/>
+                <path class="pl-st6" d="M780.3,48.3c-3.1,0-5.8,1.1-8,3.3-2.2,2.2-3.3,4.8-3.3,7.8s1.1,5.8,3.3,8c2.2,2.2,4.8,3.3,8,3.3s5.6-1.1,7.8-3.3c2.2-2.2,3.3-4.8,3.3-8s-1.1-5.6-3.3-7.8-4.8-3.3-7.8-3.3Z"/>
+                <path class="pl-st6" d="M842.1,109.9l-10.7-2.6c-2.8-.8-5.3-1.8-7.3-3.2-2-1.4-3.1-3.1-3.1-5.2s1.1-3.8,3.2-5.2c2.1-1.4,4.9-2.1,8.3-2.1s5.8.6,8.4,1.8c2.6,1.2,4.6,3.4,6.3,6.4l14.5-6.4c-1.6-3.6-3.8-6.6-6.6-8.9-2.8-2.3-6.1-4.1-9.9-5.2-3.8-1.1-8.1-1.7-12.7-1.7s-9.8.9-14.1,2.6c-4.3,1.8-7.7,4.2-10.2,7.5-2.6,3.2-3.8,7-3.8,11.4s1,7.3,2.9,10.2c1.9,2.9,4.5,5.3,7.5,7.2,3.1,1.9,6.4,3.2,9.9,4l8.7,2c2.4.5,4.5,1.1,6.5,1.8,2,.8,3.6,1.7,4.9,2.9,1.3,1.2,1.9,2.8,1.9,4.8,0,2.8-1.3,4.9-3.9,6-2.6,1.2-5.6,1.8-9,1.8s-7.3-.9-10.3-2.8c-3-1.9-5.3-4.7-7-8.4l-15.1,6.7c1.3,3.5,3.3,6.7,6,9.7,2.7,2.9,6.2,5.3,10.6,7.1,4.4,1.8,9.6,2.7,15.6,2.7s10.7-.9,15.2-2.8c4.5-1.9,8.2-4.6,10.9-8.1,2.7-3.5,4-7.6,4-12.2s-1.8-9.8-5.5-13.6c-3.6-3.7-9-6.5-16.1-8.2Z"/>
+                <path class="pl-st6" d="M909.5,137.7c-3.2,0-5.6-.9-7.1-2.6-1.5-1.7-2.3-4.4-2.3-8.1v-32.4h17.9v-14.6h-17.9v-20.5h-16.9v20.5h-12.7v14.6h12.7v35.7c0,7.3,2.1,13,6.2,17.1,4.1,4.1,9.7,6.2,16.8,6.2s4.3-.2,6.3-.6c2-.4,4-.9,6-1.7v-16.6c-1.8,1.1-3.4,1.9-4.7,2.3-1.3.4-2.7.6-4.3.6Z"/>
+                <path class="pl-st6" d="M981.6,82.7c-5.3-3.3-11.7-4.9-19.4-4.9s-13.6,1.8-19,5.3c-5.5,3.6-9.8,8.3-12.9,14.1-3.1,5.9-4.7,12.3-4.7,19.2s1.6,14,4.8,19.8c3.2,5.8,7.7,10.3,13.3,13.6,5.6,3.3,12.1,5,19.4,5s14.7-1.8,20.1-5.3c5.5-3.5,9.8-8.1,13.2-13.9l-13.8-6.8c-1.8,3.1-4.3,5.7-7.5,7.8-3.2,2.1-7.1,3.1-11.7,3.1s-7.4-.9-10.7-2.7c-3.2-1.8-5.8-4.5-7.7-8-1.4-2.5-2.3-5.5-2.7-8.9h55c0-.5.2-1.2.3-2.2,0-1,.1-2.1.1-3.3,0-6.9-1.4-13.1-4.1-18.7-2.7-5.5-6.7-9.9-12-13.2ZM943,107.7c.4-1.6.9-3.1,1.6-4.5,1.7-3.6,4.1-6.3,7.3-8.4,3.1-2,6.6-3.1,10.5-3.1s5.7.5,8,1.5c2.3,1,4.2,2.3,5.8,3.9,1.6,1.6,2.8,3.3,3.6,5.2.8,1.8,1.3,3.6,1.4,5.3h-38.1Z"/>
+                <path class="pl-st6" d="M1054.7,78.3c-1.5-.3-3.2-.4-5.2-.4-3,0-5.9.5-8.7,1.6-2.8,1.1-5.2,2.5-7.3,4.3-2.1,1.8-3.7,3.9-4.8,6.4h-1v-10.2h-15.9v72.5h16.9v-37.2c0-4,.8-7.6,2.3-10.8,1.5-3.2,3.6-5.8,6.4-7.6,2.7-1.8,6-2.8,9.7-2.8s4.1.2,6,.7c1.9.5,3.7,1.1,5.5,1.8v-17.2c-1-.5-2.3-.9-3.8-1.1Z"/>
+              </g>
+              <path class="pl-st1" d="M1067.3,153.4c-3.2,0-5.9-1.1-8.2-3.3-2.2-2.2-3.3-5-3.3-8.3s1.1-5.8,3.3-8c2.2-2.2,5-3.3,8.2-3.3s5.9,1.1,8.2,3.3c2.2,2.2,3.3,4.8,3.3,8s-1.1,6.1-3.3,8.3-5,3.3-8.2,3.3Z"/>
+            </g>
+          </g>
+        </svg>
+      </a>
+      <nav class="top-nav" aria-label="Hoofdnavigatie">
+        <a href="https://app.punchlister.ai" class="nav-cta">Inloggen</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="container wl-wrap">
+    <div class="wl-eyebrow">Gesloten bèta</div>
+
+    <form id="waitlistForm" novalidate>
+      <div class="wl-card">
+        <h1>Zet je bedrijf op de lijst.</h1>
+        <p class="wl-sub">Punchlister is nog niet publiek open. Laat je gegevens achter en we nemen <strong>persoonlijk contact</strong> op om je bedrijf gratis klaar te zetten.</p>
+
+        <div class="explain-box">
+          <div class="explain-row">
+            <span class="ex-num">1</span>
+            <div class="ex-body"><strong>Jij laat je gegevens achter</strong>Bedrijfsnaam, naam en e-mailadres. Geen wachtwoord, geen installatie, geen kredietkaart.</div>
+          </div>
+          <div class="explain-row">
+            <span class="ex-num">2</span>
+            <div class="ex-body"><strong>Wij nemen contact op</strong>Meestal binnen één werkdag plannen we een korte kennismaking en zetten we je bedrijf klaar.</div>
+          </div>
+          <div class="explain-row">
+            <span class="ex-num">3</span>
+            <div class="ex-body"><strong>Je start gratis</strong>Zodra je account klaarstaat, kan je meteen punchlisten. Geen kosten tijdens de bèta.</div>
+          </div>
+        </div>
+
+        <div class="wl-status" id="wlStatus" role="status" aria-live="polite"></div>
+
+        <div class="wl-fields">
+          <div class="field-row">
+            <div class="field">
+              <label for="wl-first">Voornaam</label>
+              <input id="wl-first" name="firstName" type="text" required maxlength="80" placeholder="Karel" autocomplete="given-name">
+            </div>
+            <div class="field">
+              <label for="wl-last">Naam</label>
+              <input id="wl-last" name="lastName" type="text" required maxlength="80" placeholder="Mertens" autocomplete="family-name">
+            </div>
+          </div>
+          <div class="field">
+            <label for="wl-email">Werk-e-mailadres</label>
+            <input id="wl-email" name="email" type="email" required maxlength="200" placeholder="naam@bedrijf.be" autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="wl-company">Bedrijfsnaam</label>
+            <input id="wl-company" name="companyName" type="text" required maxlength="120" placeholder="vb. Bouwbedrijf De Smet">
+          </div>
+          <div class="field">
+            <label for="wl-phone">Telefoon- of WhatsApp-nummer</label>
+            <input id="wl-phone" name="phone" type="tel" maxlength="30" placeholder="+32 479 09 05 49" autocomplete="tel">
+            <div class="field-hint">Optioneel — handig als we je snel willen bereiken om je bedrijf klaar te zetten.</div>
+          </div>
+          <div class="field">
+            <label for="wl-message">Korte boodschap (optioneel)</label>
+            <textarea id="wl-message" name="message" rows="3" maxlength="1000" placeholder="Waar loop je nu tegenaan op de werf?"></textarea>
+          </div>
+        </div>
+        <input class="wl-honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="wl-actions">
+          <button type="submit" class="wl-cta" id="waitlistButton">Zet me op de lijst <span class="cta-arrow">→</span></button>
+        </div>
+        <p class="wl-fineprint">We gebruiken je gegevens enkel om contact op te nemen over toegang tot Punchlister. Geen nieuwsbrief, geen doorverkoop.</p>
+      </div>
+    </form>
+
+    <div class="wl-done" id="waitlistDone" hidden>
+      <div class="wl-done-icon">✓</div>
+      <h2>Je staat op de lijst</h2>
+      <p>We nemen meestal binnen één werkdag contact met je op om je bedrijf gratis klaar te zetten.</p>
+    </div>
+
+    <p class="wl-login">
+      Heb je al toegang? <a href="https://app.punchlister.ai">Log in →</a>
+    </p>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div>© 2026 Punchlister · Gent, België</div>
+    <div class="footer-links">
+      <a href="vacatures.html">Vacatures</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="mailto:hello@punchlister.ai">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var API = '/api/waitlist';
+
+    var form   = document.getElementById('waitlistForm');
+    var status = document.getElementById('wlStatus');
+    var button = document.getElementById('waitlistButton');
+    var done   = document.getElementById('waitlistDone');
+    if (!form) return;
+
+    function setStatus(kind, message) {
+      status.className = 'wl-status show ' + kind;
+      status.textContent = message;
+    }
+    function clearStatus() { status.className = 'wl-status'; }
+
+    function validate() {
+      clearStatus();
+      var firstName = form.firstName.value.trim();
+      var lastName  = form.lastName.value.trim();
+      var email     = form.email.value.trim();
+      var company   = form.companyName.value.trim();
+
+      if (!firstName || !lastName) { setStatus('err', 'Vul je voor- en achternaam in.'); return false; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('err', 'Geef een geldig werk-e-mailadres in.'); return false; }
+      if (!company) { setStatus('err', 'Vul je bedrijfsnaam in.'); return false; }
+      return true;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (form.website && form.website.value) return; // honeypot
+      if (!validate()) return;
+
+      var data = {
+        firstName:   form.firstName.value.trim(),
+        lastName:    form.lastName.value.trim(),
+        companyName: form.companyName.value.trim(),
+        email:       form.email.value.trim(),
+        phone:       form.phone.value.trim(),
+        message:     form.message.value.trim()
+      };
+
+      button.disabled = true;
+      var originalLabel = button.innerHTML;
+      button.innerHTML = 'Versturen…';
+      clearStatus();
+
+      fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (r) {
+          return r.json().then(function (json) { return { ok: r.ok, json: json }; });
+        })
+        .then(function (res) {
+          if (res.ok && res.json && res.json.ok) {
+            form.hidden = true;
+            done.hidden = false;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            setStatus('err', (res.json && res.json.error) || 'Er ging iets mis. Probeer opnieuw of mail hello@punchlister.ai.');
+          }
+        })
+        .catch(function () {
+          setStatus('err', 'Verbinding mislukt. Probeer opnieuw of mail hello@punchlister.ai.');
+        })
+        .finally(function () {
+          button.disabled = false;
+          button.innerHTML = originalLabel;
+        });
+    });
+  })();
+</script>
+
+</body>
+</html>
