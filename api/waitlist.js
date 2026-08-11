@@ -117,9 +117,15 @@ Verstuurd via punchlister.com "Start gratis".`;
 
 Bedankt voor je aanmelding voor Punchlister namens ${companyName}.
 
+Dit hebben we van je genoteerd:
+Bedrijf:   ${companyName}
+Naam:      ${name}
+E-mail:    ${email}
+Telefoon:  ${phone || '—'}
+${message ? `Boodschap: ${message}\n` : ''}
 We nemen meestal binnen één werkdag contact met je op om je bedrijf gratis klaar te zetten voor de gesloten bèta.
 
-Vragen in de tussentijd? Antwoord gewoon op deze e-mail.
+Klopt er iets niet, of wil je iets aanvullen? Antwoord gewoon op deze e-mail.
 
 Tot binnenkort,
 Het Punchlister-team`;
@@ -129,8 +135,18 @@ Het Punchlister-team`;
         <h2 style="margin:0 0 16px;font-weight:500;">Je staat op de wachtlijst</h2>
         <p style="font-size:14px;line-height:1.6;">Hoi ${escapeHtml(firstName)},</p>
         <p style="font-size:14px;line-height:1.6;">Bedankt voor je aanmelding voor Punchlister namens <strong>${escapeHtml(companyName)}</strong>.</p>
+        <div style="margin:20px 0;padding:16px 18px;background:#f3eee3;border-radius:10px;">
+          <div style="color:#6b6280;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Dit hebben we van je genoteerd</div>
+          <table style="width:100%;border-collapse:collapse;font-size:14px;">
+            <tr><td style="padding:4px 0;color:#6b6280;width:100px;">Bedrijf</td><td style="padding:4px 0;"><strong>${escapeHtml(companyName)}</strong></td></tr>
+            <tr><td style="padding:4px 0;color:#6b6280;">Naam</td><td style="padding:4px 0;">${escapeHtml(name)}</td></tr>
+            <tr><td style="padding:4px 0;color:#6b6280;">E-mail</td><td style="padding:4px 0;">${escapeHtml(email)}</td></tr>
+            <tr><td style="padding:4px 0;color:#6b6280;">Telefoon</td><td style="padding:4px 0;">${phone ? escapeHtml(phone) : '—'}</td></tr>
+          </table>
+          ${message ? `<div style="margin-top:12px;padding-top:12px;border-top:1px solid #e2dcc9;"><div style="color:#6b6280;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Boodschap</div><div style="white-space:pre-wrap;font-size:14px;line-height:1.5;">${escapeHtml(message)}</div></div>` : ''}
+        </div>
         <p style="font-size:14px;line-height:1.6;">We nemen meestal binnen één werkdag contact met je op om je bedrijf gratis klaar te zetten voor de gesloten bèta.</p>
-        <p style="font-size:14px;line-height:1.6;">Vragen in de tussentijd? Antwoord gewoon op deze e-mail.</p>
+        <p style="font-size:14px;line-height:1.6;">Klopt er iets niet, of wil je iets aanvullen? Antwoord gewoon op deze e-mail.</p>
         <p style="font-size:14px;line-height:1.6;">Tot binnenkort,<br>Het Punchlister-team</p>
       </div>`;
 
