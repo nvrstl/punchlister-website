@@ -1,32 +1,35 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Start gratis — Punchlister</title>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Start free — Punchlister</title>
+<link rel="alternate" hreflang="nl" href="https://punchlister.ai/signup.html">
+<link rel="alternate" hreflang="en" href="https://punchlister.ai/en/signup.html">
+<link rel="alternate" hreflang="x-default" href="https://punchlister.ai/signup.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   @font-face {
     font-family: 'Google Sans';
-    src: url('assets/fonts/GoogleSans-Regular.ttf') format('truetype');
+    src: url('../assets/fonts/GoogleSans-Regular.ttf') format('truetype');
     font-weight: 400; font-style: normal; font-display: swap;
   }
   @font-face {
     font-family: 'Google Sans';
-    src: url('assets/fonts/GoogleSans-Medium.ttf') format('truetype');
+    src: url('../assets/fonts/GoogleSans-Medium.ttf') format('truetype');
     font-weight: 500; font-style: normal; font-display: swap;
   }
   @font-face {
     font-family: 'Google Sans';
-    src: url('assets/fonts/GoogleSans-SemiBold.ttf') format('truetype');
+    src: url('../assets/fonts/GoogleSans-SemiBold.ttf') format('truetype');
     font-weight: 600; font-style: normal; font-display: swap;
   }
   @font-face {
     font-family: 'Google Sans';
-    src: url('assets/fonts/GoogleSans-Bold.ttf') format('truetype');
+    src: url('../assets/fonts/GoogleSans-Bold.ttf') format('truetype');
     font-weight: 700; font-style: normal; font-display: swap;
   }
 
@@ -440,12 +443,12 @@
 <div class="gate" id="gate">
   <div class="gate-card">
     <div class="gate-logo">Punch<span>lister</span></div>
-    <h1>Nog niet publiek</h1>
-    <p>Deze pagina is nog in test. Voer het toegangswoord in om verder te gaan.</p>
+    <h1>Not public yet</h1>
+    <p>This page is still being tested. Enter the access password to continue.</p>
     <form id="gateForm" novalidate>
-      <input type="password" id="gatePassword" placeholder="Wachtwoord" autocomplete="off" autofocus>
-      <button type="submit">Verder →</button>
-      <div class="gate-error" id="gateError">Onjuist wachtwoord.</div>
+      <input type="password" id="gatePassword" placeholder="Password" autocomplete="off" autofocus>
+      <button type="submit">Continue →</button>
+      <div class="gate-error" id="gateError">Incorrect password.</div>
     </form>
   </div>
 </div>
@@ -510,9 +513,9 @@
           </g>
         </svg>
       </a>
-      <nav class="top-nav" aria-label="Hoofdnavigatie">
-        <a href="https://app.punchlister.ai" class="nav-cta">Inloggen</a>
-        <a href="en/signup.html" class="lang-switch" aria-label="Switch to English">EN</a>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="https://app.punchlister.ai" class="nav-cta">Log in</a>
+        <a href="../signup.html" class="lang-switch" aria-label="Schakel naar Nederlands">NL</a>
       </nav>
     </div>
   </div>
@@ -521,151 +524,151 @@
 <main>
   <div class="container wiz-wrap">
     <div class="wiz-stepper" id="wizStepper">
-      <div class="wiz-step active" data-step="1"><span class="wiz-dot">1</span> Je bedrijf</div>
+      <div class="wiz-step active" data-step="1"><span class="wiz-dot">1</span> Your company</div>
       <span class="wiz-line"></span>
-      <div class="wiz-step" data-step="2"><span class="wiz-dot">2</span> Jouw gegevens</div>
+      <div class="wiz-step" data-step="2"><span class="wiz-dot">2</span> Your details</div>
       <span class="wiz-line"></span>
-      <div class="wiz-step" data-step="3"><span class="wiz-dot">3</span> Jouw rol</div>
+      <div class="wiz-step" data-step="3"><span class="wiz-dot">3</span> Your role</div>
     </div>
 
     <form id="signupForm" novalidate>
 
-      <!-- STAP 1 — uitleg, geen invoer -->
+      <!-- STEP 1 — explanation, no input -->
       <section class="wiz-panel" data-panel="1">
         <div class="wiz-card">
-          <h1>Je zet je bedrijf op Punchlister.</h1>
-          <p class="wiz-sub">Jij maakt het <strong>eerste account</strong> van je bedrijf aan. Zo zit dat in elkaar:</p>
+          <h1>You're setting up your company on Punchlister.</h1>
+          <p class="wiz-sub">You're creating the <strong>first account</strong> for your company. Here's how it works:</p>
 
           <div class="explain-box">
             <div class="explain-row">
               <span class="ex-num">1</span>
-              <div class="ex-body"><strong>Eén bedrijfsomgeving</strong>Alle projecten en collega's van je bedrijf op één plek. Jij krijgt als eerste de beheerrechten: collega's uitnodigen, projecten toewijzen. Die rechten kan je later delen of doorgeven.</div>
+              <div class="ex-body"><strong>One company workspace</strong>All your company's projects and colleagues in one place. You're the first to get admin rights: inviting colleagues, assigning projects. You can share or hand off those rights later.</div>
             </div>
             <div class="explain-row">
               <span class="ex-num">2</span>
-              <div class="ex-body"><strong>Projecten met een team</strong>Elk project heeft zijn eigen dossier. Jij bepaalt wie op welk project werkt; collega's zien alleen hun eigen projecten.</div>
+              <div class="ex-body"><strong>Projects with a team</strong>Every project has its own file. You decide who works on which project; colleagues only see their own projects.</div>
             </div>
             <div class="explain-row">
               <span class="ex-num">3</span>
-              <div class="ex-body"><strong>Iedereen zijn eigen rol</strong>Projectleider, werfleider en straks meer. De rol bepaalt wat je ziet, zodat elk zijn eigen werk voor zich heeft.</div>
+              <div class="ex-body"><strong>Everyone has their own role</strong>Project manager, site manager, and more to come. Your role determines what you see, so everyone has just their own work in front of them.</div>
             </div>
           </div>
 
           <div class="wiz-actions">
-            <button type="button" class="wiz-cta" data-next>Verder <span class="cta-arrow">→</span></button>
+            <button type="button" class="wiz-cta" data-next>Continue <span class="cta-arrow">→</span></button>
           </div>
-          <p class="wiz-foot">2 minuten. Geen kredietkaart, geen installatie.</p>
+          <p class="wiz-foot">2 minutes. No credit card, no installation.</p>
         </div>
       </section>
 
-      <!-- STAP 2 — jouw gegevens -->
+      <!-- STEP 2 — your details -->
       <section class="wiz-panel" data-panel="2" hidden>
         <div class="wiz-card">
-          <h1>Wie ben jij?</h1>
-          <p class="wiz-sub">Meer hebben we niet nodig om te starten.</p>
+          <h1>Who are you?</h1>
+          <p class="wiz-sub">That's all we need to get started.</p>
 
           <div class="signup-status" id="signupStatus" role="status" aria-live="polite"></div>
 
           <div class="wiz-fields">
             <div class="field-row">
               <div class="field">
-                <label for="su-first">Voornaam</label>
+                <label for="su-first">First name</label>
                 <input id="su-first" name="firstName" type="text" required maxlength="80" placeholder="Karel" autocomplete="given-name">
               </div>
               <div class="field">
-                <label for="su-last">Naam</label>
+                <label for="su-last">Last name</label>
                 <input id="su-last" name="lastName" type="text" required maxlength="80" placeholder="Mertens" autocomplete="family-name">
               </div>
             </div>
             <div class="field">
-              <label for="su-email">Werk-e-mailadres</label>
-              <input id="su-email" name="email" type="email" required maxlength="200" placeholder="naam@bedrijf.be" autocomplete="email">
-              <div class="field-hint">Collega's met hetzelfde domein kunnen zich straks makkelijk bij je bedrijf aansluiten.</div>
+              <label for="su-email">Work email address</label>
+              <input id="su-email" name="email" type="email" required maxlength="200" placeholder="name@company.com" autocomplete="email">
+              <div class="field-hint">Colleagues with the same domain will later be able to easily join your company.</div>
             </div>
             <div class="field">
-              <label for="su-company">Bedrijfsnaam</label>
-              <input id="su-company" name="companyName" type="text" required maxlength="120" placeholder="vb. Bouwbedrijf De Smet">
+              <label for="su-company">Company name</label>
+              <input id="su-company" name="companyName" type="text" required maxlength="120" placeholder="e.g. Smith Construction Ltd">
             </div>
             <div class="field">
-              <label for="su-phone">WhatsApp-nummer</label>
+              <label for="su-phone">WhatsApp number</label>
               <input id="su-phone" name="phone" type="tel" required maxlength="30" placeholder="+32 479 09 05 49" autocomplete="tel">
-              <div class="field-hint">Hiermee stuur je straks je werfnotities naar Punchlister — meteen gekoppeld aan je account, niets extra in te stellen.</div>
+              <div class="field-hint">This is how you'll send your site notes to Punchlister — instantly linked to your account, nothing extra to set up.</div>
             </div>
             <div class="field">
-              <label for="su-password">Wachtwoord</label>
-              <input id="su-password" name="password" type="password" required minlength="8" placeholder="Minstens 8 tekens" autocomplete="new-password">
+              <label for="su-password">Password</label>
+              <input id="su-password" name="password" type="password" required minlength="8" placeholder="At least 8 characters" autocomplete="new-password">
             </div>
           </div>
           <input class="signup-honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
 
           <div class="wiz-actions">
-            <button type="button" class="wiz-back" data-back>← Terug</button>
-            <button type="button" class="wiz-cta" data-next>Verder <span class="cta-arrow">→</span></button>
+            <button type="button" class="wiz-back" data-back>← Back</button>
+            <button type="button" class="wiz-cta" data-next>Continue <span class="cta-arrow">→</span></button>
           </div>
         </div>
       </section>
 
-      <!-- STAP 3 — rolkeuze -->
+      <!-- STEP 3 — role selection -->
       <section class="wiz-panel" data-panel="3" hidden>
         <div class="wiz-card">
-          <h1>Wat doe jij op de werf?</h1>
-          <p class="wiz-sub">Je rol bepaalt wat je later ziet. Later aanpassen kan altijd.</p>
+          <h1>What's your role on site?</h1>
+          <p class="wiz-sub">Your role determines what you'll see later on. You can always change it afterwards.</p>
 
           <div class="role-grid" id="roleGrid">
             <button type="button" class="role-card selected" data-role="projectleider">
-              <span class="role-tag">Meest gekozen</span>
-              <span class="role-name">Projectleider</span>
-              <span class="role-desc">Bewaakt planning, budget, meerwerken en de klantrelatie. Krijgt het volledige projectdossier.</span>
+              <span class="role-tag">Most chosen</span>
+              <span class="role-name">Project manager</span>
+              <span class="role-desc">Oversees planning, budget, extra work and the client relationship. Gets the full project file.</span>
             </button>
             <button type="button" class="role-card" data-role="werfleider">
               <span class="role-tag">&nbsp;</span>
-              <span class="role-name">Werfleider</span>
-              <span class="role-desc">Volgt de werf dag per dag: taken, bestellingen en het dagboek der werken.</span>
+              <span class="role-name">Site manager</span>
+              <span class="role-desc">Follows the site day by day: tasks, orders and the site logbook.</span>
             </button>
             <button type="button" class="role-card" data-role="zaakvoerder">
               <span class="role-tag">&nbsp;</span>
-              <span class="role-name">Zaakvoerder / directie</span>
-              <span class="role-desc">Overzicht over alle projecten en de euro's die erin bewegen.</span>
+              <span class="role-name">Owner / management</span>
+              <span class="role-desc">An overview of all projects and the money moving through them.</span>
             </button>
             <button type="button" class="role-card" data-role="administratie">
               <span class="role-tag">&nbsp;</span>
-              <span class="role-name">Administratie</span>
-              <span class="role-desc">Facturatie en vorderingen. Wordt stap voor stap uitgebouwd.</span>
+              <span class="role-name">Administration</span>
+              <span class="role-desc">Invoicing and payment claims. Being built out step by step.</span>
             </button>
           </div>
 
           <div class="admin-note">
             <svg class="shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-            <div><strong>Jij bent ook beheerder.</strong> Als eerste account van je bedrijf krijg je de beheer-sectie erbij: collega's uitnodigen en projecten toewijzen. Dat staat los van je rol.</div>
+            <div><strong>You're also an admin.</strong> As the first account for your company, you also get the admin section: inviting colleagues and assigning projects. That's separate from your role.</div>
           </div>
 
           <div class="wiz-actions">
-            <button type="button" class="wiz-back" data-back>← Terug</button>
-            <button type="submit" class="wiz-cta" id="signupButton">Account aanmaken <span class="cta-arrow">→</span></button>
+            <button type="button" class="wiz-back" data-back>← Back</button>
+            <button type="submit" class="wiz-cta" id="signupButton">Create account <span class="cta-arrow">→</span></button>
           </div>
-          <p class="wiz-foot">Daarna zet je meteen je eerste project op.</p>
+          <p class="wiz-foot">After that, you can set up your first project right away.</p>
         </div>
       </section>
     </form>
 
-    <!-- Klaar — wachtwoord-pad: meteen doorsturen naar login -->
+    <!-- Done — password path: redirect straight to login -->
     <div class="signup-done" id="signupDonePassword" hidden>
       <div class="signup-done-icon">✓</div>
-      <h2>Account aangemaakt</h2>
-      <p>Je wordt doorgestuurd naar de app om in te loggen…</p>
+      <h2>Account created</h2>
+      <p>You're being redirected to the app to log in…</p>
     </div>
 
     <p class="signup-login">
-      Heb je al een account? <a href="https://app.punchlister.ai">Log in →</a>
+      Already have an account? <a href="https://app.punchlister.ai">Log in →</a>
     </p>
   </div>
 </main>
 
 <footer>
   <div class="container footer-inner">
-    <div>© 2026 Punchlister · Gent, België</div>
+    <div>© 2026 Punchlister · Ghent, Belgium</div>
     <div class="footer-links">
-      <a href="vacatures.html">Vacatures</a>
+      <a href="vacatures.html">Careers</a>
       <a href="privacy.html">Privacy</a>
       <a href="mailto:hello@punchlister.ai">Contact</a>
     </div>
@@ -733,12 +736,12 @@
 
       var phone = form.phone.value.trim();
 
-      if (!firstName || !lastName) { setStatus('err', 'Vul je voor- en achternaam in.'); return false; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('err', 'Geef een geldig werk-e-mailadres in.'); return false; }
-      if (!company) { setStatus('err', 'Vul je bedrijfsnaam in.'); return false; }
-      if (phone.replace(/\D/g, '').length < 8) { setStatus('err', 'Geef een geldig WhatsApp-nummer in.'); return false; }
+      if (!firstName || !lastName) { setStatus('err', 'Please fill in your first and last name.'); return false; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('err', 'Please enter a valid work email address.'); return false; }
+      if (!company) { setStatus('err', 'Please fill in your company name.'); return false; }
+      if (phone.replace(/\D/g, '').length < 8) { setStatus('err', 'Please enter a valid WhatsApp number.'); return false; }
       if (!passwordInput.value || passwordInput.value.length < 8) {
-        setStatus('err', 'Kies een wachtwoord van minstens 8 tekens.'); return false;
+        setStatus('err', 'Choose a password of at least 8 characters.'); return false;
       }
       return true;
     }
@@ -768,7 +771,7 @@
 
       button.disabled = true;
       var originalLabel = button.innerHTML;
-      button.innerHTML = 'Aanmaken…';
+      button.innerHTML = 'Creating…';
       clearStatus();
 
       fetch(API, {
@@ -788,12 +791,12 @@
             setTimeout(function () { window.location.href = redirectTo; }, 1200);
           } else {
             showPanel(2);
-            setStatus('err', (res.json && res.json.error) || 'Er ging iets mis. Probeer opnieuw of mail hello@punchlister.ai.');
+            setStatus('err', (res.json && res.json.error) || 'Something went wrong. Please try again or email hello@punchlister.ai.');
           }
         })
         .catch(function () {
           showPanel(2);
-          setStatus('err', 'Verbinding mislukt. Probeer opnieuw of mail hello@punchlister.ai.');
+          setStatus('err', 'Connection failed. Please try again or email hello@punchlister.ai.');
         })
         .finally(function () {
           button.disabled = false;

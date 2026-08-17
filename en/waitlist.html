@@ -1,33 +1,36 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Start gratis — Punchlister</title>
-<meta name="description" content="Punchlister is in gesloten bèta. Laat je gegevens achter en we nemen persoonlijk contact op om je bedrijf gratis te onboarden.">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Start free — Punchlister</title>
+<meta name="description" content="Punchlister is in closed beta. Leave your details and we'll personally get in touch to onboard your company for free.">
+<link rel="alternate" hreflang="nl" href="https://punchlister.ai/waitlist.html">
+<link rel="alternate" hreflang="en" href="https://punchlister.ai/en/waitlist.html">
+<link rel="alternate" hreflang="x-default" href="https://punchlister.ai/waitlist.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   @font-face {
     font-family: 'Google Sans';
-    src: url('assets/fonts/GoogleSans-Regular.ttf') format('truetype');
+    src: url('../assets/fonts/GoogleSans-Regular.ttf') format('truetype');
     font-weight: 400; font-style: normal; font-display: swap;
   }
   @font-face {
     font-family: 'Google Sans';
-    src: url('assets/fonts/GoogleSans-Medium.ttf') format('truetype');
+    src: url('../assets/fonts/GoogleSans-Medium.ttf') format('truetype');
     font-weight: 500; font-style: normal; font-display: swap;
   }
   @font-face {
     font-family: 'Google Sans';
-    src: url('assets/fonts/GoogleSans-SemiBold.ttf') format('truetype');
+    src: url('../assets/fonts/GoogleSans-SemiBold.ttf') format('truetype');
     font-weight: 600; font-style: normal; font-display: swap;
   }
   @font-face {
     font-family: 'Google Sans';
-    src: url('assets/fonts/GoogleSans-Bold.ttf') format('truetype');
+    src: url('../assets/fonts/GoogleSans-Bold.ttf') format('truetype');
     font-weight: 700; font-style: normal; font-display: swap;
   }
 
@@ -293,9 +296,9 @@
           </g>
         </svg>
       </a>
-      <nav class="top-nav" aria-label="Hoofdnavigatie">
-        <a href="https://app.punchlister.ai" class="nav-cta">Inloggen</a>
-        <a href="en/waitlist.html" class="lang-switch" aria-label="Switch to English">EN</a>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="https://app.punchlister.ai" class="nav-cta">Log in</a>
+        <a href="../waitlist.html" class="lang-switch" aria-label="Schakel naar Nederlands">NL</a>
       </nav>
     </div>
   </div>
@@ -303,11 +306,11 @@
 
 <main>
   <div class="container wl-wrap">
-    <div class="wl-eyebrow">Gesloten bèta</div>
+    <div class="wl-eyebrow">Closed beta</div>
 
     <div class="wl-progress" id="wlProgress">
       <div class="wl-progress-track"><div class="wl-progress-fill" id="wlProgressFill"></div></div>
-      <div class="wl-progress-label"><span id="wlStepLabel">Stap 1 van 4</span><span>~1 minuut</span></div>
+      <div class="wl-progress-label"><span id="wlStepLabel">Step 1 of 4</span><span>~1 minute</span></div>
     </div>
 
     <form id="waitlistForm" novalidate>
@@ -315,99 +318,99 @@
 
         <div class="wl-status" id="wlStatus" role="status" aria-live="polite"></div>
 
-        <!-- STAP 1 — uitleg, geen invoer -->
+        <!-- STEP 1 — explanation, no input -->
         <section class="wl-panel" data-panel="1">
-          <h1>Zet je bedrijf op de lijst.</h1>
-          <p class="wl-sub">Punchlister is nog niet publiek open. In iets minder dan een minuut weten we genoeg om <strong>persoonlijk contact</strong> op te nemen.</p>
+          <h1>Get your company on the list.</h1>
+          <p class="wl-sub">Punchlister isn't publicly open yet. In just under a minute, we'll know enough to <strong>get in touch personally</strong>.</p>
 
           <div class="explain-box">
             <div class="explain-row">
               <span class="ex-num">1</span>
-              <div class="ex-body"><strong>Jij laat je gegevens achter</strong>Bedrijfsnaam, naam en e-mailadres. Geen wachtwoord, geen installatie, geen kredietkaart.</div>
+              <div class="ex-body"><strong>You leave your details</strong>Company name, your name and email address. No password, no installation, no credit card.</div>
             </div>
             <div class="explain-row">
               <span class="ex-num">2</span>
-              <div class="ex-body"><strong>Wij nemen contact op</strong>Meestal binnen één werkdag plannen we een korte kennismaking en zetten we je bedrijf klaar.</div>
+              <div class="ex-body"><strong>We get in touch</strong>Usually within one business day, we schedule a short introduction and set up your company.</div>
             </div>
             <div class="explain-row">
               <span class="ex-num">3</span>
-              <div class="ex-body"><strong>Je start gratis</strong>Zodra je account klaarstaat, kan je meteen punchlisten. Geen kosten tijdens de bèta.</div>
+              <div class="ex-body"><strong>You start for free</strong>As soon as your account is ready, you can start punchlisting right away. No costs during the beta.</div>
             </div>
           </div>
 
           <div class="wl-actions">
-            <button type="button" class="wl-cta" data-next>Ja, laten we starten <span class="cta-arrow">→</span></button>
+            <button type="button" class="wl-cta" data-next>Yes, let's get started <span class="cta-arrow">→</span></button>
           </div>
         </section>
 
-        <!-- STAP 2 — naam -->
+        <!-- STEP 2 — name -->
         <section class="wl-panel" data-panel="2" hidden>
-          <h1>Hoe mogen we je noemen?</h1>
-          <p class="wl-sub">Zodat we je straks persoonlijk kunnen aanspreken.</p>
+          <h1>What should we call you?</h1>
+          <p class="wl-sub">So we can address you personally later on.</p>
 
           <div class="wl-fields">
             <div class="field-row">
               <div class="field">
-                <label for="wl-first">Voornaam</label>
+                <label for="wl-first">First name</label>
                 <input id="wl-first" name="firstName" type="text" required maxlength="80" placeholder="Karel" autocomplete="given-name">
               </div>
               <div class="field">
-                <label for="wl-last">Naam</label>
+                <label for="wl-last">Last name</label>
                 <input id="wl-last" name="lastName" type="text" required maxlength="80" placeholder="Mertens" autocomplete="family-name">
               </div>
             </div>
           </div>
 
           <div class="wl-actions">
-            <button type="button" class="wl-back" data-back>← Terug</button>
-            <button type="button" class="wl-cta" data-next>Verder <span class="cta-arrow">→</span></button>
+            <button type="button" class="wl-back" data-back>← Back</button>
+            <button type="button" class="wl-cta" data-next>Continue <span class="cta-arrow">→</span></button>
           </div>
         </section>
 
-        <!-- STAP 3 — bedrijf + e-mail -->
+        <!-- STEP 3 — company + email -->
         <section class="wl-panel" data-panel="3" hidden>
-          <h1>Voor welk bedrijf werk je?</h1>
-          <p class="wl-sub">En op welk werk-e-mailadres bereiken we je het best?</p>
+          <h1>What company do you work for?</h1>
+          <p class="wl-sub">And which work email address reaches you best?</p>
 
           <div class="wl-fields">
             <div class="field">
-              <label for="wl-company">Bedrijfsnaam</label>
-              <input id="wl-company" name="companyName" type="text" required maxlength="120" placeholder="vb. Bouwbedrijf De Smet">
+              <label for="wl-company">Company name</label>
+              <input id="wl-company" name="companyName" type="text" required maxlength="120" placeholder="e.g. Smith Construction Ltd">
             </div>
             <div class="field">
-              <label for="wl-email">Werk-e-mailadres</label>
-              <input id="wl-email" name="email" type="email" required maxlength="200" placeholder="naam@bedrijf.be" autocomplete="email">
+              <label for="wl-email">Work email address</label>
+              <input id="wl-email" name="email" type="email" required maxlength="200" placeholder="name@company.com" autocomplete="email">
             </div>
           </div>
 
           <div class="wl-actions">
-            <button type="button" class="wl-back" data-back>← Terug</button>
-            <button type="button" class="wl-cta" data-next>Verder <span class="cta-arrow">→</span></button>
+            <button type="button" class="wl-back" data-back>← Back</button>
+            <button type="button" class="wl-cta" data-next>Continue <span class="cta-arrow">→</span></button>
           </div>
         </section>
 
-        <!-- STAP 4 — optioneel + versturen -->
+        <!-- STEP 4 — optional + submit -->
         <section class="wl-panel" data-panel="4" hidden>
-          <h1>Nog iets dat helpt?</h1>
-          <p class="wl-sub">Beide velden zijn optioneel — maar helpen ons om je sneller te woord te staan.</p>
+          <h1>Anything else that helps?</h1>
+          <p class="wl-sub">Both fields are optional — but they help us get back to you faster.</p>
 
           <div class="wl-fields">
             <div class="field">
-              <label for="wl-phone">Telefoon- of WhatsApp-nummer</label>
+              <label for="wl-phone">Phone or WhatsApp number</label>
               <input id="wl-phone" name="phone" type="tel" maxlength="30" placeholder="+32 479 09 05 49" autocomplete="tel">
             </div>
             <div class="field">
-              <label for="wl-message">Korte boodschap</label>
-              <textarea id="wl-message" name="message" rows="3" maxlength="1000" placeholder="Waar loop je nu tegenaan op de werf?"></textarea>
+              <label for="wl-message">Short message</label>
+              <textarea id="wl-message" name="message" rows="3" maxlength="1000" placeholder="What are you running into on site right now?"></textarea>
             </div>
           </div>
           <input class="wl-honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
 
           <div class="wl-actions">
-            <button type="button" class="wl-back" data-back>← Terug</button>
-            <button type="submit" class="wl-cta" id="waitlistButton">Zet me op de lijst <span class="cta-arrow">→</span></button>
+            <button type="button" class="wl-back" data-back>← Back</button>
+            <button type="submit" class="wl-cta" id="waitlistButton">Put me on the list <span class="cta-arrow">→</span></button>
           </div>
-          <p class="wl-fineprint">We gebruiken je gegevens enkel om contact op te nemen over toegang tot Punchlister. Geen nieuwsbrief, geen doorverkoop.</p>
+          <p class="wl-fineprint">We only use your details to contact you about access to Punchlister. No newsletter, no reselling.</p>
         </section>
 
       </div>
@@ -415,21 +418,21 @@
 
     <div class="wl-done" id="waitlistDone" hidden>
       <div class="wl-done-icon">✓</div>
-      <h2>Je staat op de lijst</h2>
-      <p>We nemen meestal binnen één werkdag contact met je op om je bedrijf gratis klaar te zetten.</p>
+      <h2>You're on the list</h2>
+      <p>We usually get in touch within one business day to set up your company for free.</p>
     </div>
 
     <p class="wl-login">
-      Heb je al toegang? <a href="https://app.punchlister.ai">Log in →</a>
+      Already have access? <a href="https://app.punchlister.ai">Log in →</a>
     </p>
   </div>
 </main>
 
 <footer>
   <div class="container footer-inner">
-    <div>© 2026 Punchlister · Gent, België</div>
+    <div>© 2026 Punchlister · Ghent, Belgium</div>
     <div class="footer-links">
-      <a href="vacatures.html">Vacatures</a>
+      <a href="vacatures.html">Careers</a>
       <a href="privacy.html">Privacy</a>
       <a href="mailto:hello@punchlister.ai">Contact</a>
     </div>
@@ -466,7 +469,7 @@
     function showPanel(n) {
       panels.forEach(function (p) { p.hidden = (Number(p.getAttribute('data-panel')) !== n); });
       fill.style.width = Math.round((n / total) * 100) + '%';
-      stepLbl.textContent = 'Stap ' + n + ' van ' + total;
+      stepLbl.textContent = 'Step ' + n + ' of ' + total;
       clearStatus();
       var active = panelOf(n);
       var firstField = active && active.querySelector('input, textarea');
@@ -478,13 +481,13 @@
       if (n === 2) {
         var firstName = form.firstName.value.trim();
         var lastName  = form.lastName.value.trim();
-        if (!firstName || !lastName) { setStatus('err', 'Vul je voor- en achternaam in.'); return false; }
+        if (!firstName || !lastName) { setStatus('err', 'Please fill in your first and last name.'); return false; }
       }
       if (n === 3) {
         var company = form.companyName.value.trim();
         var email   = form.email.value.trim();
-        if (!company) { setStatus('err', 'Vul je bedrijfsnaam in.'); return false; }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('err', 'Geef een geldig werk-e-mailadres in.'); return false; }
+        if (!company) { setStatus('err', 'Please fill in your company name.'); return false; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('err', 'Please enter a valid work email address.'); return false; }
       }
       return true;
     }
@@ -521,9 +524,9 @@
       var email     = form.email.value.trim();
       var company   = form.companyName.value.trim();
 
-      if (!firstName || !lastName) { setStatus('err', 'Vul je voor- en achternaam in.'); return false; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('err', 'Geef een geldig werk-e-mailadres in.'); return false; }
-      if (!company) { setStatus('err', 'Vul je bedrijfsnaam in.'); return false; }
+      if (!firstName || !lastName) { setStatus('err', 'Please fill in your first and last name.'); return false; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('err', 'Please enter a valid work email address.'); return false; }
+      if (!company) { setStatus('err', 'Please fill in your company name.'); return false; }
       return true;
     }
 
@@ -543,7 +546,7 @@
 
       button.disabled = true;
       var originalLabel = button.innerHTML;
-      button.innerHTML = 'Versturen…';
+      button.innerHTML = 'Sending…';
       clearStatus();
 
       fetch(API, {
@@ -561,11 +564,11 @@
             done.hidden = false;
             window.scrollTo({ top: 0, behavior: 'smooth' });
           } else {
-            setStatus('err', (res.json && res.json.error) || 'Er ging iets mis. Probeer opnieuw of mail hello@punchlister.ai.');
+            setStatus('err', (res.json && res.json.error) || 'Something went wrong. Please try again or email hello@punchlister.ai.');
           }
         })
         .catch(function () {
-          setStatus('err', 'Verbinding mislukt. Probeer opnieuw of mail hello@punchlister.ai.');
+          setStatus('err', 'Connection failed. Please try again or email hello@punchlister.ai.');
         })
         .finally(function () {
           button.disabled = false;

@@ -52,6 +52,14 @@
     background:var(--ink-deep); text-decoration:none; padding:9px 18px; border-radius:999px; transition:background 0.2s ease;
   }
   .nav-cta:hover { background:var(--accent); }
+  .lang-switch {
+    font-family: 'Google Sans', sans-serif; font-weight: 500; font-size: 12.5px;
+    color: var(--ink-soft); text-decoration: none; letter-spacing: 0.02em;
+    padding: 8px 13px; border-radius: 999px; border: 1px solid rgba(26, 18, 64, 0.14);
+    margin-left: 6px; line-height: 1; display: inline-flex; align-items: center;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+  .lang-switch:hover { color: var(--ink); border-color: rgba(26, 18, 64, 0.3); background: rgba(26, 18, 64, 0.05); }
 
   /* ============ TOP NAV ============ */
   .top-nav { display:flex; align-items:center; gap:4px; }
@@ -91,8 +99,8 @@
     .nav-toggle:checked ~ .nav-burger span:nth-child(1) { transform:translateY(6px) rotate(45deg); }
     .nav-toggle:checked ~ .nav-burger span:nth-child(2) { opacity:0; }
     .nav-toggle:checked ~ .nav-burger span:nth-child(3) { transform:translateY(-6px) rotate(-45deg); }
-    .nav-link, .top-nav .nav-cta { width:100%; font-size:15px; padding:12px 14px; }
-    .top-nav .nav-cta { justify-content:center; text-align:center; margin-top:6px; }
+    .nav-link, .top-nav .nav-cta, .top-nav .lang-switch { width:100%; font-size:15px; padding:12px 14px; }
+    .top-nav .nav-cta, .top-nav .lang-switch { justify-content:center; text-align:center; margin-top:6px; }
     .nav-group { position:static; }
     .nav-trigger { display:none; }
     .nav-dropdown { position:static; transform:none; opacity:1; visibility:visible; box-shadow:none; border:none; border-radius:0; padding:0 0 0 12px; min-width:0; margin:2px 0; border-left:2px solid #e7e3f2; }
@@ -269,6 +277,7 @@
         <a href="vacatures.html" class="nav-link">Vacatures</a>
         <a href="waitlist.html" class="nav-link">Start gratis</a>
         <a href="index.html#pilot" class="nav-cta">Doe mee aan de pilot</a>
+        <a href="en/aannemers.html" class="lang-switch" aria-label="Switch to English">EN</a>
       </nav>
       <label for="nav-toggle" class="nav-burger" aria-label="Menu"><span></span><span></span><span></span></label>
     </div>
