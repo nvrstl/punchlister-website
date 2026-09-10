@@ -866,10 +866,11 @@
   }
 
   .pm-card {
-    background: var(--paper-warm);
+    background: #edeff2;
     border-radius: 18px;
     padding: 36px 32px 40px;
     min-height: 240px;
+    border-top: 3px solid transparent;
     transition: background 0.3s ease, transform 0.3s ease;
     position: relative;
   }
@@ -878,6 +879,13 @@
     transform: translateY(-2px);
     background: #e4e7ec;
   }
+
+  /* Each card picks up one of the logo's three hues instead of all three
+     being the same neutral gray — a bit of the mark's own color rather than
+     more monochrome purple. */
+  .pm-card.c-1 { border-top-color: rgba(109, 92, 240, 0.45); }
+  .pm-card.c-2 { border-top-color: rgba(192, 56, 158, 0.4); }
+  .pm-card.c-3 { border-top-color: rgba(14, 148, 136, 0.4); }
 
   .pm-card-num {
     font-family: 'Google Sans', sans-serif;
@@ -888,6 +896,10 @@
     margin-bottom: 28px;
     letter-spacing: -0.02em;
   }
+
+  .pm-card.c-1 .pm-card-num { color: rgba(109, 92, 240, 0.35); }
+  .pm-card.c-2 .pm-card-num { color: rgba(192, 56, 158, 0.32); }
+  .pm-card.c-3 .pm-card-num { color: rgba(14, 148, 136, 0.32); }
 
   .pm-card h3 {
     font-family: 'Google Sans', sans-serif;
@@ -1037,7 +1049,7 @@
     aspect-ratio: 1 / 1;
     position: relative;
     border-radius: 16px;
-    background: var(--paper-warm);
+    background: #f3eefc;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -1099,9 +1111,9 @@
     font-size: 10px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--doc-accent, var(--accent));
     font-weight: 500;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, color 0.3s ease;
   }
 
   .paper-time {
@@ -1120,8 +1132,9 @@
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: var(--accent);
+    background: var(--doc-accent, var(--accent));
     animation: timePulse 1.6s ease-in-out infinite;
+    transition: background 0.3s ease;
   }
 
   @keyframes timePulse {
@@ -1151,9 +1164,9 @@
     margin-top: auto;
     align-self: flex-end;
     padding: 6px 12px;
-    border: 1.5px solid var(--accent);
+    border: 1.5px solid var(--doc-accent, var(--accent));
     border-radius: 6px;
-    color: var(--accent);
+    color: var(--doc-accent, var(--accent));
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     letter-spacing: 0.2em;
@@ -1161,6 +1174,7 @@
     font-weight: 600;
     transform: rotate(-6deg);
     opacity: 0;
+    transition: color 0.3s ease, border-color 0.3s ease;
   }
 
   .paper-stamp.in {
@@ -2471,17 +2485,17 @@
     </div>
 
     <div class="pm-value-grid reveal-stagger">
-      <div class="pm-card">
+      <div class="pm-card c-1">
         <div class="pm-card-num">01</div>
         <h3>Geen werfverslagen meer typen</h3>
         <p>De projectleider dicteert wat er besproken is. Punchlister maakt er een gestructureerde mail van die naar de bouwheer gaat. Klaar voor verzending in twee minuten in plaats van twintig.</p>
       </div>
-      <div class="pm-card">
+      <div class="pm-card c-2">
         <div class="pm-card-num">02</div>
         <h3>Duidelijke afspraken met onderaannemers</h3>
         <p>Wat besproken is op de werf, staat nog dezelfde dag zwart op wit in een mail naar je onderaannemer. Iedereen weet wat verwacht wordt. De samenwerking blijft soepel, ook wanneer er druk op de planning komt.</p>
       </div>
-      <div class="pm-card">
+      <div class="pm-card c-3">
         <div class="pm-card-num">03</div>
         <h3>Meerwerken meteen geprijsd.</h3>
         <p>Vraagt de bouwheer iets extra? Punchlister maakt een eerste raming op basis van uren en materiaal, en stuurt die mee in de bevestigingsmail. De definitieve offerte volgt later.</p>
@@ -3065,6 +3079,11 @@
     var content = document.getElementById('builtPaper');
     if (!content) return;
 
+    // Cycles through the logo's three hues (violet, pink, teal) instead of a
+    // single fixed accent — echoes the multicolor mark instead of yet more
+    // monochrome purple.
+    var ACCENTS = ['#6d5cf0', '#c0389e', '#0e9488'];
+
     var docs = [
       { type: 'PROCES-VERBAAL',     time: '22:47', stamp: 'Punchlister ✓' },
       { type: 'WET BREYNE — ART. 7', time: '23:14', stamp: 'Verstuurd' },
@@ -3084,6 +3103,7 @@
       typeEl.textContent  = d.type;
       timeEl.textContent  = d.time;
       stampEl.textContent = d.stamp;
+      content.style.setProperty('--doc-accent', ACCENTS[idx % ACCENTS.length]);
       stampEl.classList.remove('in');
       if (withStamp) {
         // re-trigger stamp animation
