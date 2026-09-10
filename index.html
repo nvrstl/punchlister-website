@@ -870,7 +870,7 @@
     border-radius: 18px;
     padding: 36px 32px 40px;
     min-height: 240px;
-    border-top: 3px solid transparent;
+    border-top: 4px solid transparent;
     transition: background 0.3s ease, transform 0.3s ease;
     position: relative;
   }
@@ -880,12 +880,12 @@
     background: #e4e7ec;
   }
 
-  /* Each card picks up one of the logo's three hues instead of all three
-     being the same neutral gray — a bit of the mark's own color rather than
-     more monochrome purple. */
-  .pm-card.c-1 { border-top-color: rgba(109, 92, 240, 0.45); }
-  .pm-card.c-2 { border-top-color: rgba(192, 56, 158, 0.4); }
-  .pm-card.c-3 { border-top-color: rgba(14, 148, 136, 0.4); }
+  /* Each card picks up one of the logo's three hues at full strength —
+     direct color, not a washed-out tint — instead of all three being the
+     same neutral gray. */
+  .pm-card.c-1 { border-top-color: #6d5cf0; }
+  .pm-card.c-2 { border-top-color: #c0389e; }
+  .pm-card.c-3 { border-top-color: #0e9488; }
 
   .pm-card-num {
     font-family: 'Google Sans', sans-serif;
@@ -897,9 +897,9 @@
     letter-spacing: -0.02em;
   }
 
-  .pm-card.c-1 .pm-card-num { color: rgba(109, 92, 240, 0.35); }
-  .pm-card.c-2 .pm-card-num { color: rgba(192, 56, 158, 0.32); }
-  .pm-card.c-3 .pm-card-num { color: rgba(14, 148, 136, 0.32); }
+  .pm-card.c-1 .pm-card-num { color: #6d5cf0; }
+  .pm-card.c-2 .pm-card-num { color: #c0389e; }
+  .pm-card.c-3 .pm-card-num { color: #0e9488; }
 
   .pm-card h3 {
     font-family: 'Google Sans', sans-serif;
@@ -1043,7 +1043,7 @@
     align-items: center;
   }
 
-  /* ============ BUILT-BY ANIMATED STACK ============ */
+  /* ============ BUILT-BY BRAND MARK ============ */
   .built-visual {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -1056,154 +1056,32 @@
     justify-content: center;
   }
 
-  .stack {
+  .brand-mark {
     position: relative;
-    width: 70%;
-    aspect-ratio: 3 / 4;
-    animation: stackFloat 6s ease-in-out infinite;
+    width: 38%;
+    animation: markFloat 6s ease-in-out infinite;
+    filter: drop-shadow(0 18px 32px rgba(40, 0, 99, 0.18));
+  }
+  .brand-mark svg { display: block; width: 100%; height: auto; }
+
+  @keyframes markFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-8px) rotate(-2deg); }
   }
 
-  @keyframes stackFloat {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-6px); }
-  }
-
-  .paper {
+  /* Loose scatter of the mark's own hues behind it — same three-color
+     language as the value cards, not a fabricated screenshot. */
+  .mark-chip {
     position: absolute;
-    inset: 0;
-    background: #ffffff;
-    border-radius: 6px;
-    box-shadow:
-      0 1px 2px rgba(26, 18, 64, 0.06),
-      0 8px 22px rgba(26, 18, 64, 0.10);
-    border: 1px solid rgba(26, 18, 64, 0.04);
+    border-radius: 12px;
   }
-
-  .paper.back-2 {
-    transform: translate(14px, 18px) rotate(4deg);
-    background: #f7f8fa;
-    z-index: 1;
-  }
-  .paper.back-1 {
-    transform: translate(7px, 9px) rotate(-2deg);
-    background: #fdfcf8;
-    z-index: 2;
-  }
-
-  .paper.front {
-    z-index: 3;
-    padding: 22px 22px 18px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .paper-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--rule-soft);
-    margin-bottom: 14px;
-  }
-
-  .paper-type {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--doc-accent, var(--accent));
-    font-weight: 500;
-    transition: opacity 0.3s ease, color 0.3s ease;
-  }
-
-  .paper-time {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    transition: opacity 0.3s ease;
-  }
-
-  .paper-time::before {
-    content: '';
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--doc-accent, var(--accent));
-    animation: timePulse 1.6s ease-in-out infinite;
-    transition: background 0.3s ease;
-  }
-
-  @keyframes timePulse {
-    0%, 100% { opacity: 0.4; transform: scale(0.85); }
-    50%      { opacity: 1;   transform: scale(1.15); }
-  }
-
-  .paper-lines {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1;
-    transition: opacity 0.3s ease;
-  }
-
-  .paper-line {
-    height: 6px;
-    border-radius: 3px;
-    background: linear-gradient(90deg, rgba(26, 18, 64, 0.10), rgba(26, 18, 64, 0.04));
-  }
-
-  .paper-line.short  { width: 60%; }
-  .paper-line.medium { width: 82%; }
-  .paper-line.full   { width: 100%; }
-
-  .paper-stamp {
-    margin-top: auto;
-    align-self: flex-end;
-    padding: 6px 12px;
-    border: 1.5px solid var(--doc-accent, var(--accent));
-    border-radius: 6px;
-    color: var(--doc-accent, var(--accent));
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 600;
-    transform: rotate(-6deg);
-    opacity: 0;
-    transition: color 0.3s ease, border-color 0.3s ease;
-  }
-
-  .paper-stamp.in {
-    opacity: 0.85;
-    animation: stampIn 0.5s cubic-bezier(.34, 1.56, .64, 1);
-  }
-
-  @keyframes stampIn {
-    0%   { opacity: 0; transform: rotate(-6deg) scale(2.2); }
-    60%  { opacity: 1; transform: rotate(-6deg) scale(0.92); }
-    100% { opacity: 0.85; transform: rotate(-6deg) scale(1); }
-  }
-
-  .paper-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-  }
-
-  .paper-content.swapping .paper-type,
-  .paper-content.swapping .paper-time,
-  .paper-content.swapping .paper-lines,
-  .paper-content.swapping .paper-stamp {
-    opacity: 0;
-  }
+  .mark-chip.m1 { width: 15%; aspect-ratio: 1; top: 14%; left: 12%; background: #ffabff; opacity: 0.55; transform: rotate(-12deg); }
+  .mark-chip.m2 { width: 11%; aspect-ratio: 1; bottom: 16%; left: 20%; background: #b2f9eb; opacity: 0.6;  transform: rotate(8deg); }
+  .mark-chip.m3 { width: 13%; aspect-ratio: 1; top: 20%; right: 14%; background: #8b88f1; opacity: 0.5;  transform: rotate(16deg); }
+  .mark-chip.m4 { width: 9%;  aspect-ratio: 1; bottom: 20%; right: 18%; background: #7669ff; opacity: 0.45; transform: rotate(-8deg); }
 
   @media (prefers-reduced-motion: reduce) {
-    .stack, .paper-time::before { animation: none !important; }
+    .brand-mark { animation: none !important; }
   }
 
   .built-content h2 {
@@ -2818,25 +2696,19 @@
   <div class="container">
     <div class="built-grid">
       <div class="built-visual reveal" aria-hidden="true">
-        <div class="stack">
-          <div class="paper back-2"></div>
-          <div class="paper back-1"></div>
-          <div class="paper front">
-            <div class="paper-content" id="builtPaper">
-              <div class="paper-header">
-                <span class="paper-type">PROCES-VERBAAL</span>
-                <span class="paper-time">22:47</span>
-              </div>
-              <div class="paper-lines">
-                <div class="paper-line full"></div>
-                <div class="paper-line medium"></div>
-                <div class="paper-line full"></div>
-                <div class="paper-line short"></div>
-                <div class="paper-line medium"></div>
-              </div>
-              <div class="paper-stamp">Punchlister ✓</div>
-            </div>
-          </div>
+        <span class="mark-chip m1"></span>
+        <span class="mark-chip m2"></span>
+        <span class="mark-chip m3"></span>
+        <span class="mark-chip m4"></span>
+        <div class="brand-mark">
+          <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(0,38)">
+              <path fill="#ffabff" d="M271.5,56.6h0c-5.2,19.2-22.6,32.6-42.5,32.6h-27.8l9.2-34.1h-124.6L100.2,1.2h128.8c28.9,0,50,27.4,42.5,55.4Z"/>
+              <path fill="#b2f9eb" d="M185.1,149.1l-14.4,53.8H55.4c-35.7,0-61.7-33.9-52.5-68.4L24.2,55.1h61.5l-25.2,94h124.5Z"/>
+              <path fill="#8b88f1" d="M201.2,89.3l9.2-34.1h-124.6,0s0,0,0,0l-25.2,94h31.3c0,0,0,0,0,0h13.8c5.4-5.4,9.4-11,12.2-16.4l69.1-43.4h14.2Z"/>
+              <path fill="#280063" d="M105.7,149.1c28.4-28.4,16-59.9,16-59.9h79.5l-95.5,59.9Z"/>
+            </g>
+          </svg>
         </div>
       </div>
       <div class="built-content reveal">
@@ -3070,88 +2942,6 @@
       }, { threshold: 0.3 });
       io.observe(stage);
     } else {
-      start();
-    }
-  })();
-
-  /* ============ BUILT-BY DOCUMENT STACK ============ */
-  (function () {
-    var content = document.getElementById('builtPaper');
-    if (!content) return;
-
-    // Cycles through the logo's three hues (violet, pink, teal) instead of a
-    // single fixed accent — echoes the multicolor mark instead of yet more
-    // monochrome purple.
-    var ACCENTS = ['#6d5cf0', '#c0389e', '#0e9488'];
-
-    var docs = [
-      { type: 'PROCES-VERBAAL',     time: '22:47', stamp: 'Punchlister ✓' },
-      { type: 'WET BREYNE — ART. 7', time: '23:14', stamp: 'Verstuurd' },
-      { type: 'BETWISTING FACTUUR', time: '23:42', stamp: 'Geseponeerd' },
-      { type: 'WERFVERSLAG 14/05',  time: '00:08', stamp: 'Klaar' },
-      { type: 'SCHADECLAIM',        time: '00:31', stamp: 'Behandeld' }
-    ];
-
-    var typeEl  = content.querySelector('.paper-type');
-    var timeEl  = content.querySelector('.paper-time');
-    var stampEl = content.querySelector('.paper-stamp');
-    var idx = 0;
-    var timer = null;
-    var visible = false;
-
-    function paint(d, withStamp) {
-      typeEl.textContent  = d.type;
-      timeEl.textContent  = d.time;
-      stampEl.textContent = d.stamp;
-      content.style.setProperty('--doc-accent', ACCENTS[idx % ACCENTS.length]);
-      stampEl.classList.remove('in');
-      if (withStamp) {
-        // re-trigger stamp animation
-        void stampEl.offsetWidth;
-        stampEl.classList.add('in');
-      }
-    }
-
-    function next() {
-      if (!visible) return;
-      idx = (idx + 1) % docs.length;
-      content.classList.add('swapping');
-      setTimeout(function () {
-        paint(docs[idx], false);
-        content.classList.remove('swapping');
-        // stamp comes down a moment after the new doc appears
-        setTimeout(function () {
-          stampEl.textContent = docs[idx].stamp;
-          void stampEl.offsetWidth;
-          stampEl.classList.add('in');
-        }, 380);
-      }, 320);
-    }
-
-    function start() {
-      stop();
-      timer = setInterval(next, 2800);
-    }
-    function stop() {
-      if (timer) clearInterval(timer);
-      timer = null;
-    }
-
-    // initial stamp drop
-    paint(docs[0], true);
-
-    var stage = document.querySelector('.built-visual');
-    if ('IntersectionObserver' in window && stage) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          visible = e.isIntersecting;
-          if (visible) start();
-          else stop();
-        });
-      }, { threshold: 0.15 });
-      io.observe(stage);
-    } else {
-      visible = true;
       start();
     }
   })();
