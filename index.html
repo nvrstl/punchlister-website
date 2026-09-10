@@ -223,11 +223,7 @@
     position: relative;
     padding: 150px 0 90px;
     overflow: hidden;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(179, 170, 245, 0.45), transparent 70%),
-      radial-gradient(ellipse 60% 50% at 80% 30%, rgba(255, 200, 240, 0.28), transparent 70%),
-      radial-gradient(ellipse 60% 50% at 20% 40%, rgba(178, 249, 235, 0.22), transparent 70%),
-      linear-gradient(180deg, #ece6ff 0%, #f5f0ff 60%, var(--paper) 100%);
+    background: #f3eefc;
   }
 
   .hero .container {
@@ -259,10 +255,7 @@
 
   .hero h1 .line-faded {
     display: block;
-    background: linear-gradient(180deg, rgba(124, 109, 240, 0.55), rgba(124, 109, 240, 0.18));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--accent-soft);
   }
 
   .hero-sub {
@@ -430,7 +423,7 @@
   .artifact-section {
     padding: 40px 0 120px;
     position: relative;
-    background: linear-gradient(180deg, var(--paper) 0%, var(--paper) 100%);
+    background: var(--paper);
     overflow: hidden;
   }
 
@@ -460,45 +453,6 @@
     margin: 0 auto;
     position: relative;
     padding: 60px 20px 40px;
-  }
-
-  .tablet-halo {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    filter: blur(60px);
-    opacity: 0.85;
-    z-index: 0;
-  }
-
-  .tablet-halo::before,
-  .tablet-halo::after {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-  }
-
-  .tablet-halo::before {
-    width: 60%;
-    height: 70%;
-    left: -8%;
-    top: 5%;
-    background: radial-gradient(circle, var(--halo-1) 0%, transparent 65%);
-    animation: floatHalo 10s ease-in-out infinite;
-  }
-
-  .tablet-halo::after {
-    width: 65%;
-    height: 70%;
-    right: -8%;
-    top: 0%;
-    background: radial-gradient(circle, var(--halo-2) 0%, transparent 65%);
-    animation: floatHalo 12s ease-in-out infinite reverse;
-  }
-
-  @keyframes floatHalo {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50%      { transform: translate(15px, -10px) scale(1.05); }
   }
 
   .tablet {
@@ -998,16 +952,6 @@
     overflow: hidden;
   }
 
-  .horizon::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 80% 20%, rgba(124, 109, 240, 0.18), transparent 50%),
-      radial-gradient(ellipse at 10% 90%, rgba(179, 170, 245, 0.10), transparent 50%);
-    pointer-events: none;
-  }
-
   .horizon .container { position: relative; }
 
   .horizon-eyebrow {
@@ -1093,10 +1037,7 @@
     aspect-ratio: 1 / 1;
     position: relative;
     border-radius: 16px;
-    background:
-      radial-gradient(ellipse at 30% 20%, rgba(124, 109, 240, 0.12), transparent 60%),
-      radial-gradient(ellipse at 70% 80%, rgba(255, 171, 255, 0.10), transparent 60%),
-      var(--paper-warm);
+    background: var(--paper-warm);
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -1566,7 +1507,6 @@
   @media (prefers-reduced-motion: reduce) {
     .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
     .hero-eyebrow, .hero h1, .hero-sub, .cta-primary, .cta-secondary, .hero-note, .hero-visual { opacity: 1 !important; animation: none !important; }
-    .tablet-halo::before, .tablet-halo::after { animation: none !important; }
   }
 
   @keyframes fadeUp {
@@ -1579,10 +1519,7 @@
     padding: 100px 0;
     position: relative;
     overflow: hidden;
-    background:
-      radial-gradient(ellipse at 18% 40%, rgba(178, 249, 235, 0.30), transparent 55%),
-      radial-gradient(ellipse at 88% 60%, rgba(124, 109, 240, 0.10), transparent 55%),
-      var(--paper);
+    background: var(--paper);
   }
 
   .flow-head {
@@ -1657,9 +1594,8 @@
     position: absolute;
     inset: 44px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(178, 249, 235, 0.55), rgba(255, 171, 255, 0.18) 60%, transparent 72%);
+    background: rgba(124, 109, 240, 0.14);
     filter: blur(2px);
-    animation: enginePulse 4.5s ease-in-out infinite;
   }
 
   .engine-mark {
@@ -1817,10 +1753,6 @@
   @keyframes engineSpin {
     to { transform: rotate(360deg); }
   }
-  @keyframes enginePulse {
-    0%, 100% { opacity: 0.7; transform: scale(0.96); }
-    50%      { opacity: 1;   transform: scale(1.04); }
-  }
   @keyframes wireFlow {
     to { stroke-dashoffset: -10; }
   }
@@ -1908,9 +1840,7 @@
   /* ============ CAPTURE / WHATSAPP FLOW ============ */
   .capture {
     padding: 110px 0;
-    background:
-      radial-gradient(1100px 520px at 50% -8%, rgba(124, 109, 240, 0.07), transparent 70%),
-      var(--paper);
+    background: var(--paper);
     overflow: hidden;
   }
 
@@ -2515,7 +2445,6 @@
   </div>
 
   <div class="tablet-stage reveal">
-    <div class="tablet-halo" aria-hidden="true"></div>
 
     <div class="tablet">
       <div class="tablet-screen">
